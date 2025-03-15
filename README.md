@@ -1,3 +1,4 @@
+
 # PãoFácil - Estrutura do Projeto
 
 ## Visão Geral
@@ -18,7 +19,7 @@ Atualmente, o foco está no **frontend**, mas o **backend** está sendo desenvol
 ### Diretório `frontend`
 O **frontend** é desenvolvido em React e segue uma estrutura modular, com componentes reutilizáveis e organizados por função:
 
-
+```
 /frontend
 ├── /public            # Arquivos públicos (HTML, ícones, manifest.json)
 ├── /src               # Código-fonte do frontend
@@ -34,7 +35,7 @@ O **frontend** é desenvolvido em React e segue uma estrutura modular, com compo
 │   ├── routes.js      # Configuração das rotas
 │   ├── styles.css     # Estilização global
 └── package.json       # Dependências do projeto
-
+```
 
 ### Diretório `backend` (Futuro)
 O **backend** será desenvolvido utilizando **Java** e o framework **Spring Boot**. Essa escolha tecnológica visa garantir robustez, escalabilidade e facilidade de manutenção. O backend será responsável por armazenar e processar dados, oferecendo uma API RESTful para comunicação com o frontend.
