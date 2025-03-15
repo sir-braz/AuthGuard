@@ -1,4 +1,3 @@
-
 # PãoFácil - Estrutura do Projeto
 
 ## Visão Geral
@@ -49,6 +48,7 @@ O **backend** será desenvolvido utilizando **Java** e o framework **Spring Boot
 
 A arquitetura da aplicação seguirá o padrão **MVC (Model-View-Controller)**, com a separação de responsabilidades em camadas:
 
+```
 /backend
 ├── /src
 │   ├── /controller    # Controladores que gerenciam as requisições HTTP
@@ -59,6 +59,7 @@ A arquitetura da aplicação seguirá o padrão **MVC (Model-View-Controller)**,
 │   ├── /exception     # Tratamento de exceções
 │   └── Application.java  # Ponto de entrada da aplicação Spring Boot
 └── pom.xml            # Arquivo de dependências do projeto
+```
 
 ### Fluxo de Desenvolvimento do Backend
 
