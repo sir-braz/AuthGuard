@@ -1,7 +1,6 @@
 package com.pao.facil.paofacil_backend.entity;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -17,15 +16,7 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    // Relacionamento Many-to-Many com Role
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles;
-
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -49,5 +40,4 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }
