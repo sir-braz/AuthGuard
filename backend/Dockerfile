@@ -1,27 +1,26 @@
-FROM openjdk:17-jdk-slim AS build
+# Use uma imagem do OpenJDK 17 como base
+FROM openjdk:17-jdk-slim
 
 # Instalar Maven
 RUN apt-get update && apt-get install -y maven
 
-# Definir o diretório de trabalho no container
+# Defina o diretório de trabalho
 WORKDIR /app
 
-# Copiar os arquivos do projeto para o diretório de trabalho
-COPY . .
+# Copie o arquivo pom.xml para o contêiner
+COPY pom.xml .
 
-# Rodar o Maven para compilar o projeto (sem rodar os testes)
+# Baixe as dependências do Maven
+RUN mvn dependency:go-offline
+
+# Copie o código-fonte para o contêiner
+COPY ./src ./src
+
+# Compile o projeto e gere o pacote JAR, ignorando os testes
 RUN mvn clean package -DskipTests
 
-# Usar o OpenJDK 17 na imagem final
-FROM openjdk:17-jdk-slim
-
-WORKDIR /app
-
-# Copiar o arquivo JAR do estágio anterior
-COPY --from=build /app/target/paofacil-backend-0.0.1-SNAPSHOT.jar /app/app.jar
-
-# Expor a porta
+# Expõe a porta em que a aplicação será executada
 EXPOSE 8080
 
-# Rodar o JAR
-CMD ["java", "-jar", "app.jar"]
+# Comando para iniciar a aplicação
+CMD ["java", "-jar", "target/paofacil-backend.jar"]
