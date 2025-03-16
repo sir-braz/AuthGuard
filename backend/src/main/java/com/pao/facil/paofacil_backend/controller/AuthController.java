@@ -1,10 +1,9 @@
-package com.example.paoFacil.controller;
+package com.pao.facil.paofacil_backend.controller;
 
-import com.example.paoFacil.model.User;
-import com.example.paoFacil.repository.UserRepository;
-import com.example.paoFacil.dto.LoginRequest;
-import com.example.paoFacil.dto.LoginResponse;
-import com.example.paoFacil.service.AuthService;
+import com.pao.facil.paofacil_backend.entity.User;
+import com.pao.facil.paofacil_backend.dto.LoginRequest;
+import com.pao.facil.paofacil_backend.dto.LoginResponse;
+import com.pao.facil.paofacil_backend.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

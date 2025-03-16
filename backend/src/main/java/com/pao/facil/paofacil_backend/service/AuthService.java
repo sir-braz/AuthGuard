@@ -1,9 +1,9 @@
-package com.example.paoFacil.service;
+package com.pao.facil.paofacil_backend.service;
 
-import com.example.paoFacil.model.User;
-import com.example.paoFacil.repository.UserRepository;
-import com.example.paoFacil.dto.LoginRequest;
-import com.example.paoFacil.dto.LoginResponse;
+import com.pao.facil.paofacil_backend.entity.User;
+import com.pao.facil.paofacil_backend.repository.UserRepository;
+import com.pao.facil.paofacil_backend.dto.LoginRequest;
+import com.pao.facil.paofacil_backend.dto.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,8 +22,8 @@ public class AuthService {
         User user = userRepository.findByUsername(loginRequest.getUsername()).orElse(null);
 
         if (user != null && passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            // A lógica de geração de token pode ser inserida aqui, caso seja necessário
-            String token = "generated-jwt-token"; // Placeholder, no momento sem JWT
+            // A lógica de geração de token pode ser inserida aqui
+            String token = "generated-jwt-token"; // Placeholder para o JWT
 
             return new LoginResponse(token);
         } else {

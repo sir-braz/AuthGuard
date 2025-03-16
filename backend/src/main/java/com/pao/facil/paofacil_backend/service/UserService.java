@@ -1,7 +1,7 @@
-package com.example.paoFacil.service;
+package com.pao.facil.paofacil_backend.service;
 
-import com.example.paoFacil.model.User;
-import com.example.paoFacil.repository.UserRepository;
+import com.pao.facil.paofacil_backend.entity.User;
+import com.pao.facil.paofacil_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
-package com.example.paoFacil.controller;
+package com.pao.facil.paofacil_backend.controller;
 
-import com.example.paoFacil.model.Role;
-import com.example.paoFacil.service.RoleService;
+import com.pao.facil.paofacil_backend.entity.Role;
+import com.pao.facil.paofacil_backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
