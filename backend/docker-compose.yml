@@ -1,0 +1,30 @@
+services:
+  backend:
+    build:
+      context: .  # Caminho para o diretório do Dockerfile
+    container_name: paofacil-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/pao_facil
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_DRIVER-CLASS-NAME: org.postgresql.Driver
+      SPRING_JPA_HIBERNATE_DDL-AUTO: update
+      SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+
+  db:
+    image: postgres:13
+    container_name: paofacil-db
+    environment:
+      POSTGRES_DB: pao_facil  # Nome do banco de dados a ser criado
+      POSTGRES_USER: root    # Usuário do banco de dados
+      POSTGRES_PASSWORD: root  # Senha do banco de dados
+    volumes:
+      - postgres-data:/var/lib/postgresql/data  # Persistência dos dados
+
+volumes:
+  postgres-data:
+    driver: local

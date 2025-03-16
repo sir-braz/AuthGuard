@@ -1,17 +1,18 @@
 package com.pao.facil.paofacil_backend.util;
 
+import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.stereotype.Component;
+
 
 import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
 
-    private final String secretKey = "mySecretKey"; // Altere para uma chave segura
-    private final long expirationTime = 3600000; // Token expira em 1 hora (3600000 ms)
+    private final String secretKey = "eQ!k5Zz7#P2yLw4*8BsA09Xj8K0nNm5V";
+    private final long expirationTime = 3600000;
 
     // Método para gerar um token JWT
     public String generateToken(String username) {

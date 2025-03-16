@@ -5,7 +5,7 @@ import com.pao.facil.paofacil_backend.repository.UserRepository;
 import com.pao.facil.paofacil_backend.dto.LoginRequest;
 import com.pao.facil.paofacil_backend.dto.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +15,7 @@ public class AuthService {
     private UserRepository userRepository;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;  // BCryptPasswordEncoder será injetado aqui
 
     // Método para autenticar usuário
     public LoginResponse authenticate(LoginRequest loginRequest) {
