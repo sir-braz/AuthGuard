@@ -46,9 +46,7 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {
-        try {
-            // Em uma implementação mais robusta, você poderia adicionar o token a uma blacklist
-            // ou implementar um mecanismo de revogação de token
+        try{
             return ResponseEntity.ok("Logout realizado com sucesso");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Erro ao realizar logout: " + e.getMessage());
