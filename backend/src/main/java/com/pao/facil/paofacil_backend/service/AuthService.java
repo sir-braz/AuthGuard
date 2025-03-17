@@ -15,16 +15,14 @@ public class AuthService {
     private UserRepository userRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;  // BCryptPasswordEncoder será injetado aqui
+    private PasswordEncoder passwordEncoder;
 
     // Método para autenticar usuário
     public LoginResponse authenticate(LoginRequest loginRequest) {
         User user = userRepository.findByUsername(loginRequest.getUsername()).orElse(null);
 
         if (user != null && passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            // A lógica de geração de token pode ser inserida aqui
             String token = "generated-jwt-token"; // Placeholder para o JWT
-
             return new LoginResponse(token);
         } else {
             throw new RuntimeException("Credenciais inválidas");
@@ -36,9 +34,14 @@ public class AuthService {
         if (userRepository.existsByUsername(user.getUsername())) {
             return false; // Retorna false caso o nome de usuário já esteja em uso
         }
-        // Codificando a senha antes de salvar no banco
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user); // Salva o usuário no banco de dados
+        userRepository.save(user);
         return true;
+    }
+
+    // Método para invalidar o token (versão simplificada)
+    public void invalidateToken(String token) {
+        // Apenas registra que o token foi invalidado
+        System.out.println("Token invalidado: " + token);
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -22,10 +24,10 @@ public class AuthController {
         return ResponseEntity.ok(loginResponse);
     }
 
-    // Endpoint de logout (invalidação do token, se aplicável)
+    // Endpoint de logout (invalidação do token)
     @PostMapping("/logout")
-    public ResponseEntity<LogoutResponse> logout() {
+    public ResponseEntity<LogoutResponse> logout(@RequestHeader("Authorization") String token) {
+        authService.invalidateToken(token);
         return ResponseEntity.ok(new LogoutResponse("Logout realizado com sucesso."));
     }
-
 }
