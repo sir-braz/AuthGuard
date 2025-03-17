@@ -1,79 +1,51 @@
+## 🚀 Rodando o Backend com Docker Compose
 
-# Paofacil Backend
+Para facilitar a inicialização do backend junto com o banco de dados, utilizamos o **Docker Compose**. Siga os passos abaixo para rodar o projeto:
 
-Este repositório contém o backend da aplicação **PaoFacil**, uma plataforma de gestão de pedidos de pães.
+### **📌 Pré-requisitos**
+Antes de continuar, certifique-se de ter instalado:
+- **Docker** 🐳 → [Instalar Docker](https://docs.docker.com/get-docker/)
+- **Docker Compose** 📦 → [Instalar Docker Compose](https://docs.docker.com/compose/install/)
 
-## Requisitos
+---
 
-Antes de rodar o projeto, você precisa ter as seguintes ferramentas instaladas:
+### **🔧 Passos para execução**
+1. **Clone o repositório** (se ainda não fez isso):
+   ```bash
+   git clone https://github.com/sir-braz/PaoFacil.git
+   cd backend
+   ```
 
-- [Java 17](https://adoptopenjdk.net/)
-- [Maven 3.6+](https://maven.apache.org/)
-- [Docker](https://www.docker.com/)
+2. **Inicie os containers com Docker Compose**:
+   ```bash
+   sudo docker-compose up --build
+   ```
+   📌 O parâmetro `--build` garante que as imagens sejam reconstruídas caso haja alguma alteração.
 
-## Construção e Execução Local
+3. **Aguarde a inicialização** e o backend estará rodando em:
+   ```
+   http://localhost:8080
+   ```
 
-### 1. Clonar o Repositório
+4. **Para parar os containers**, pressione `CTRL + C` ou execute:
+   ```bash
+   sudo docker-compose down
+   ```
 
-Clone o repositório do backend para sua máquina local:
+---
 
+### **🐳 Estrutura do Docker Compose**
+O **Docker Compose** é responsável por subir dois containers:
+- **Backend** (`paofacil-backend`) → API desenvolvida em **Java + Spring Boot**.
+- **Banco de Dados** (`paofacil-db`) → **PostgreSQL** como banco de dados relacional.
+
+Caso precise verificar se os containers estão rodando, use:
 ```bash
-git clone https://github.com/sir-braz/PaoFacil.git
-cd backend
+sudo docker ps
 ```
 
-### 2. Construir o Projeto com Maven
-
-Para compilar e empacotar o projeto em um JAR executável, use o Maven:
-
+Se precisar remover todos os containers:
 ```bash
-mvn clean package -DskipTests
+sudo docker rm -f $(sudo docker ps -aq)
 ```
-
-Isso irá gerar o arquivo `paofacil-backend-0.0.1-SNAPSHOT.jar` dentro da pasta `target/`.
-
-### 3. Executar Localmente
-
-Para rodar a aplicação localmente, utilize o seguinte comando:
-
-```bash
-java -jar target/paofacil-backend-0.0.1-SNAPSHOT.jar
-```
-
-A aplicação será executada na porta **8080** por padrão.
-
-## Construção com Docker
-
-Caso queira rodar a aplicação dentro de um container Docker, siga os passos abaixo.
-
-### 1. Construir a Imagem Docker
-
-Execute o comando a seguir para construir a imagem Docker:
-
-```bash
-sudo docker build -t paofacil-backend .
-```
-
-### 2. Rodar o Container Docker
-
-Depois de construir a imagem, execute o container com o seguinte comando:
-
-```bash
-sudo docker run -p 8080:8080 paofacil-backend
-```
-
-A aplicação estará disponível na URL `http://localhost:8080`.
-
-
-## Contribuição
-
-Se você quiser contribuir para o projeto, por favor, siga os seguintes passos:
-
-1. Fork este repositório.
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`).
-3. Faça suas alterações e commit (`git commit -am 'Adicionando nova feature'`).
-4. Push para a branch (`git push origin feature/nova-feature`).
-5. Abra um Pull Request para revisão.
-
-
 
