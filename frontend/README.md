@@ -1,87 +1,41 @@
-# **Documentação Frontend - Pão Fácil**
+## 📌 Requisitos do Frontend
 
-## Descrição do Projeto
+### Requisitos Funcionais
+- O **frontend** deve permitir que o usuário interaja com a **API** para:
+  - Registrar **vendas** e visualizar relatórios detalhados de desempenho.
+  - **Cadastrar e monitorar o estoque**, incluindo a quantidade de pães disponíveis e o histórico de produtos.
+  - Visualizar as **sobras de pães**, com gráficos e informações sobre a produção versus vendas.
+  - **Monitorar notas a pagar**, com alertas de vencimento e prazos de pagamento.
+  - **Registrar e monitorar a presença de funcionários**, permitindo marcação de entrada e saída.
+  - **Exibir painel de indicadores** com gráficos interativos, mostrando dados de vendas, estoque e outros KPIs relevantes.
+  - **Exibir uma interface amigável** com navegação intuitiva e responsiva.
 
-O **Pão Fácil** é uma aplicação frontend destinada a ajudar padarias a gerenciar suas operações de maneira eficiente. O sistema permite a administração de **vendas**, **estoque**, **pedidos pendentes**, **comprovantes de vendas**, **relatórios**, **usuários** e **registro de presença de funcionários**. O projeto é desenvolvido com o objetivo de ser uma solução escalável para padarias e possui uma interface responsiva construída com **React**.
+### Requisitos Não Funcionais
+- A aplicação frontend deve ser **responsiva**, funcionando corretamente em **desktop, tablets e dispositivos móveis**.
+- A **performance** do frontend deve ser otimizada para garantir tempos de carregamento rápidos (menos de 2 segundos para a maioria das páginas).
+- O sistema deve garantir uma **boa experiência do usuário** (UX), com **feedback visual** claro em todas as interações.
+- A comunicação entre o **frontend** e o **backend** deve ser feita via **APIs RESTful** seguras e eficientes.
+- A aplicação deve seguir os princípios de **modularidade e reutilização de componentes**, facilitando a manutenção e a escalabilidade do código.
+- **Autenticação e segurança**: O sistema deve garantir que as operações críticas (como registrar vendas, ajustar estoque, entre outras) sejam protegidas por **autenticação de usuário**, utilizando tokens JWT ou outro método de segurança adequado.
+- A interface deve ser construída usando **React**, com **Axios** para realizar chamadas à API e **CSS Modules** para estilização.
 
-## Estrutura do Projeto
+### Requisitos de Design
+- O design deve ser **moderno e minimalista**, com cores e fontes harmoniosas para facilitar a leitura e navegação.
+- O uso de **Bootstrap** e **CSS Modules** deve garantir que a interface seja responsiva, com layouts que se adaptem bem a diferentes tamanhos de tela.
+- O **dashboard de indicadores** deve apresentar **gráficos interativos** para análise rápida das métricas chave (vendas, estoque, sobras de pães, etc.).
 
-O projeto utiliza **React** para construir uma interface dinâmica e responsiva. A estrutura do frontend é organizada da seguinte forma:
+### Performance
+- O frontend deve ser **rápido** e reagir com **baixa latência** aos cliques do usuário, com foco em proporcionar uma experiência fluida e sem atrasos.
+- A aplicação deve ser otimizada para o **uso de memória e processamento**, evitando o uso excessivo de recursos do navegador.
 
-### Diretórios e Arquivos Importantes
+### Acessibilidade
+- O sistema deve ser **acessível** para pessoas com deficiências, garantindo que o conteúdo e a navegação sejam compatíveis com leitores de tela e outras tecnologias assistivas.
+- O design deve incluir **contrastes adequados** para facilitar a leitura para todos os tipos de usuários.
 
-- **src/**: Contém todos os arquivos de código-fonte da aplicação.
-  - **components/**: Contém os componentes reutilizáveis (como botões, tabelas, formulários, etc).
-  - **pages/**: Contém as páginas principais da aplicação (Dashboard, Vendas, Estoque, etc).
-  - **services/**: Contém funções responsáveis por interagir com APIs ou gerenciar dados temporários.
-  - **assets/**: Contém recursos estáticos como imagens, ícones e folhas de estilo.
-
-### Principais Tecnologias Utilizadas
-
-- **React**: Biblioteca JavaScript para construção da interface de usuário.
-- **React-Router**: Usado para navegação entre as páginas da aplicação.
-- **React-Bootstrap**: Conjunto de componentes de interface de usuário baseado no framework Bootstrap, para um design responsivo e amigável.
-- **jsPDF**: Biblioteca utilizada para a geração de comprovantes de vendas em PDF.
-
-### Funcionalidades Implementadas
-
-1. **Dashboard**
-   - Apresentação de informações gerais sobre vendas, estoque e métricas de performance.
-   
-2. **Registro de Vendas**
-   - Interface para registrar vendas, selecionar produtos e gerar **comprovantes de venda** em PDF.
-
-3. **Gestão de Estoque**
-   - Funcionalidades para listar, adicionar, editar e excluir produtos no estoque.
-
-4. **Pedidos Pendentes**
-   - Monitoramento e acompanhamento dos pedidos que aguardam processamento.
-
-5. **Relatórios**
-   - Exibição de relatórios sobre as vendas e o estoque da padaria.
-
-6. **Configurações e Gestão de Usuários**
-   - Interface para administrar usuários e permissões administrativas.
-
-7. **Múltiplas Padarias**
-   - Permite a criação e o gerenciamento de múltiplas padarias, com dados independentes para cada uma.
-
-8. **Registro de Presença**
-   - Funcionalidade para registrar as entradas e saídas dos funcionários, monitorando a frequência de trabalho.
-
-## Como Executar o Projeto
-
-### 1. Clone o repositório
-
-```bash
-git clone https://github.com/sir-braz/pao-facil.git
+### Considerações Técnicas
+- A aplicação **frontend** deve ser construída com **React** e ser bem estruturada utilizando componentes reutilizáveis.
+- **Axios** será utilizado para interagir com a API backend.
+- A comunicação com a API backend deve ser feita usando o protocolo **HTTPS** para garantir a segurança dos dados.
+- **React Router** pode ser utilizado para gerenciar a navegação entre páginas de maneira eficiente e simples.
 ```
-
-### 2. Instale as dependências
-
-No diretório raiz do projeto, execute o comando abaixo para instalar as dependências:
-
-```bash
-npm install
-```
-
-### 3. Execute o projeto
-
-Após a instalação das dependências, inicie o servidor de desenvolvimento:
-
-```bash
-npm start
-```
-
-A aplicação estará disponível em **http://localhost:3000**.
-
-## Como Contribuir
-
-Contribuições são bem-vindas! Para contribuir, siga os passos abaixo:
-
-1. Fork o repositório.
-2. Crie uma branch para sua funcionalidade (`git checkout -b feature/nova-funcionalidade`).
-3. Faça as alterações necessárias e commit as mudanças (`git commit -am 'Adiciona nova funcionalidade'`).
-4. Envie para o repositório original (`git push origin feature/nova-funcionalidade`).
-5. Crie uma Pull Request explicando suas modificações.
 
