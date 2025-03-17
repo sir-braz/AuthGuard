@@ -19,10 +19,14 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
         try {
-            authService.registerUser(registerRequest);
-            return ResponseEntity.ok("Usuário registrado com sucesso");
+            boolean registered = authService.registerUser(registerRequest);
+            if (registered) {
+                return ResponseEntity.ok("Usuário registrado com sucesso");
+            } else {
+                return ResponseEntity.badRequest().body("Erro ao registrar o usuário");
+            }
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body("Erro: " + e.getMessage());
         }
     }
 
@@ -32,24 +36,33 @@ public class AuthController {
             LoginResponse response = authService.authenticate(loginRequest);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body("Erro: " + e.getMessage());
         }
     }
 
     @GetMapping("/me")
     public ResponseEntity<String> getUserInfo(Authentication authentication) {
         if (authentication != null) {
+            // Retorna informações do usuário autenticado
             return ResponseEntity.ok("Usuário autenticado: " + authentication.getName());
         }
+        // Se não estiver autenticado, retorna erro
         return ResponseEntity.badRequest().body("Usuário não autenticado");
     }
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {
-        try{
-            return ResponseEntity.ok("Logout realizado com sucesso");
+        try {
+            boolean logoutSuccess = authService.logout(token);
+
+            if (logoutSuccess) {
+                return ResponseEntity.ok("Logout realizado com sucesso");
+            } else {
+                return ResponseEntity.badRequest().body("Erro ao invalidar o token");
+            }
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Erro ao realizar logout: " + e.getMessage());
         }
     }
+
 }

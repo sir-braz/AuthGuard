@@ -1,7 +1,11 @@
 package com.pao.facil.paofacil_backend;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -17,9 +21,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 public class AuthControllerTest {
@@ -38,19 +41,32 @@ public class AuthControllerTest {
         this.mockMvc = MockMvcBuilders.standaloneSetup(authController).build();
     }
 
+    // Teste do login
     @Test
     public void testLogin() throws Exception {
         // Simula o comportamento do AuthService
         when(authService.authenticate(any(LoginRequest.class)))
                 .thenReturn(new LoginResponse("mockToken"));
 
-        // Cria um JSON para enviar no corpo da requisição
-        String loginJson = new ObjectMapper().writeValueAsString(new LoginRequest("testuser", "testpass"));
-
-        // Faz a requisição POST simulada e verifica se retorna 200 OK
         mockMvc.perform(post("/auth/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(loginJson))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"username\":\"testuser\", \"password\":\"testpass\"}"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void testLogout() throws Exception {
+        // Simula o comportamento do método logout que retorna um booleano
+        when(authService.logout(anyString())).thenReturn(true);
+
+        // Cria um JSON para enviar no cabeçalho Authorization
+        String token = "mockToken";
+
+        mockMvc.perform(post("/auth/logout")
+                        .header("Authorization", "Bearer " + token))  // Certifique-se de passar o token corretamente
+                .andExpect(status().isOk())  // Verifica se o status HTTP é OK (200)
+                .andExpect(result -> assertEquals("Logout realizado com sucesso", result.getResponse().getContentAsString()));
+    }
+
+
 }

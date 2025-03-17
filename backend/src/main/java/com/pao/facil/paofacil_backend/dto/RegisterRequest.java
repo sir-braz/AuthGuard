@@ -5,6 +5,9 @@ public class RegisterRequest {
     private String email;
     private String password;
 
+    public RegisterRequest(String newuser, String newpassword) {
+    }
+
     // Getters e Setters
     public String getUsername() {
         return username;

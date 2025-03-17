@@ -10,12 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.http.HttpStatus;
-
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class AuthService {
@@ -29,6 +25,10 @@ public class AuthService {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    // Armazena tokens revogados (simulação simples)
+    private Set<String> revokedTokens = new HashSet<>();
+
+    // Registra o usuário
     public boolean registerUser(RegisterRequest registerRequest) {
         if (userRepository.findByUsername(registerRequest.getUsername()).isPresent()) {
             throw new RuntimeException("Nome de usuário já em uso.");
@@ -41,6 +41,7 @@ public class AuthService {
         return true;
     }
 
+    // Autentica o usuário e gera um token
     public LoginResponse authenticate(LoginRequest loginRequest) {
         User user = userRepository.findByUsername(loginRequest.getUsername())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
@@ -53,10 +54,13 @@ public class AuthService {
         return new LoginResponse(token);
     }
 
-    public String getUsernameFromToken(String token) {
-        return jwtTokenProvider.getUsernameFromToken(token);
+    // Método de logout (simulação de revogação de token)
+    public boolean logout(String token) {
+        // Simula a revogação do token
+        return revokedTokens.add(token);  // Adiciona o token à lista de revogados
     }
 
+    // Método que valida o token
     public boolean validateToken(String token) {
         return jwtTokenProvider.validateToken(token);
     }
