@@ -4,8 +4,8 @@ import com.pao.facil.paofacil_backend.entity.User;
 import com.pao.facil.paofacil_backend.repository.UserRepository;
 import com.pao.facil.paofacil_backend.dto.LoginRequest;
 import com.pao.facil.paofacil_backend.dto.LoginResponse;
+import org.mindrot.jbcrypt.BCrypt; // Importando a biblioteca BCrypt
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,14 +14,11 @@ public class AuthService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     // Método para autenticar usuário
     public LoginResponse authenticate(LoginRequest loginRequest) {
         User user = userRepository.findByUsername(loginRequest.getUsername()).orElse(null);
 
-        if (user != null && passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+        if (user != null && BCrypt.checkpw(loginRequest.getPassword(), user.getPassword())) {
             String token = "generated-jwt-token"; // Placeholder para o JWT
             return new LoginResponse(token);
         } else {
@@ -34,7 +31,8 @@ public class AuthService {
         if (userRepository.existsByUsername(user.getUsername())) {
             return false; // Retorna false caso o nome de usuário já esteja em uso
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        user.setPassword(hashedPassword);  // Armazenar a senha já com hash
         userRepository.save(user);
         return true;
     }
