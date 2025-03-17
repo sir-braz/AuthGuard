@@ -6,15 +6,16 @@ import com.pao.facil.paofacil_backend.dto.RegisterRequest;
 import com.pao.facil.paofacil_backend.entity.User;
 import com.pao.facil.paofacil_backend.repository.UserRepository;
 import com.pao.facil.paofacil_backend.util.JwtTokenProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Service
 public class AuthService {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -25,12 +26,9 @@ public class AuthService {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    // Armazena tokens revogados (simulação simples)
-    private Set<String> revokedTokens = new HashSet<>();
-
-    // Registra o usuário
     public boolean registerUser(RegisterRequest registerRequest) {
         if (userRepository.findByUsername(registerRequest.getUsername()).isPresent()) {
+            logger.warn("Tentativa de registro com nome de usuário já em uso: {}", registerRequest.getUsername());
             throw new RuntimeException("Nome de usuário já em uso.");
         }
 
@@ -38,30 +36,34 @@ public class AuthService {
         user.setUsername(registerRequest.getUsername());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         userRepository.save(user);
+        logger.info("Usuário registrado com sucesso: {}", registerRequest.getUsername());
         return true;
     }
 
-    // Autentica o usuário e gera um token
     public LoginResponse authenticate(LoginRequest loginRequest) {
         User user = userRepository.findByUsername(loginRequest.getUsername())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> {
+                    logger.error("Usuário não encontrado: {}", loginRequest.getUsername());
+                    return new RuntimeException("Usuário não encontrado");
+                });
 
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            logger.error("Senha inválida para o usuário: {}", loginRequest.getUsername());
             throw new RuntimeException("Senha inválida");
         }
 
         String token = jwtTokenProvider.generateToken(user.getUsername());
+        logger.info("Login bem-sucedido para o usuário: {}", loginRequest.getUsername());
         return new LoginResponse(token);
     }
 
-    // Método de logout (simulação de revogação de token)
-    public boolean logout(String token) {
-        // Simula a revogação do token
-        return revokedTokens.add(token);  // Adiciona o token à lista de revogados
-    }
+    public void logout(String token) {
+        if (token == null || token.isEmpty()) {
+            logger.warn("Tentativa de logout com token inválido.");
+            throw new RuntimeException("Token inválido.");
+        }
 
-    // Método que valida o token
-    public boolean validateToken(String token) {
-        return jwtTokenProvider.validateToken(token);
+        logger.info("Usuário deslogado com sucesso. Token: {}", token);
+        // Adicione lógica para invalidar o token, se necessário
     }
 }
