@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Form, Button, Card, Alert } from "react-bootstrap";
-import './Login.css'
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
