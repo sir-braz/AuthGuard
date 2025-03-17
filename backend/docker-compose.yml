@@ -4,34 +4,27 @@ services:
   db:
     image: postgres:13
     container_name: paofacil-db
+    restart: always
     environment:
+      POSTGRES_DB: pao_facil
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: pao_facil
     ports:
       - "5432:5432"
-    networks:
-      - paofacil-network
     volumes:
-      - paofacil-db-data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
 
   backend:
     build: .
     container_name: paofacil-backend
+    depends_on:
+      - db
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/pao_facil
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     ports:
       - "8080:8080"
-    depends_on:
-      - db
-    networks:
-      - paofacil-network
-
-networks:
-  paofacil-network:
-    driver: bridge
 
 volumes:
-  paofacil-db-data:
+  postgres_data:

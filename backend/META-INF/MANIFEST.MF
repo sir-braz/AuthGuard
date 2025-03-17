@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Created-By: Apache Maven 3.6.3
+Built-By: vinicius
+Build-Jdk: 17.0.14
+Implementation-Title: paofacil-backend
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.pao.facil
+Implementation-URL: https://spring.io/projects/spring-boot/paofacil-back
+ end
+Main-Class: com.pao.facil.PaofacilBackendApplication
+
