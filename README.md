@@ -1,10 +1,9 @@
-# PãoFácil - Estrutura do Projeto
+# PãoFácil - Sistema de Gestão para Padarias
 
-## Visão Geral
-**PãoFácil** é um sistema desenvolvido para a gestão de padarias, permitindo a administração de vendas, estoque, pedidos pendentes, comprovantes de vendas, relatórios, usuários e registro de presença de funcionários. O projeto é projetado para ser escalável e fácil de manter, permitindo futuras integrações e melhorias.
+## 📌 Visão Geral
+O **PãoFácil** é um sistema desenvolvido para ajudar padarias na gestão de vendas, controle de estoque, acompanhamento de pedidos, monitoramento de sobras de pães, verificação de notas em prazo, análise de vendas e registro da folha de ponto dos funcionários. O objetivo principal é reduzir desperdícios e otimizar a administração do negócio.
 
-## Estrutura do Projeto
-
+## 📂 Estrutura do Projeto
 O projeto está dividido em dois principais diretórios:
 
 ```
@@ -13,19 +12,18 @@ O projeto está dividido em dois principais diretórios:
 ├── /backend   # API e banco de dados (Java + Spring Boot)
 ```
 
-Atualmente, o foco está no **frontend**, mas o **backend** está sendo desenvolvido com **Java** e **Spring Boot**, garantindo uma arquitetura robusta e escalável.
+Atualmente, o foco está no **frontend**, mas o **backend** está sendo desenvolvido com **Java** e **Spring Boot**, garantindo uma arquitetura escalável e de fácil manutenção.
 
-### Diretório `frontend`
-O **frontend** é desenvolvido em React e segue uma estrutura modular, com componentes reutilizáveis e organizados por função:
+---
+
+## 🎨 Diretório `frontend`
+O frontend é desenvolvido em **React**, seguindo uma estrutura modular e reutilizável:
 
 ```
 /frontend
 ├── /public            # Arquivos públicos (HTML, ícones, manifest.json)
 ├── /src               # Código-fonte do frontend
 │   ├── /components    # Componentes reutilizáveis (Navbar, Botões, Cards, etc.)
-│   │   ├── Navbar.js  # Componente Navbar
-│   │   ├── Navbar.css # Estilização do componente Navbar
-│   │   └── ...        # Outros componentes
 │   ├── /pages         # Páginas principais (Dashboard, Vendas, Estoque, etc.)
 │   ├── /context       # Context API para gerenciamento de estado global
 │   ├── /utils         # Funções auxiliares
@@ -36,50 +34,86 @@ O **frontend** é desenvolvido em React e segue uma estrutura modular, com compo
 └── package.json       # Dependências do projeto
 ```
 
-### Diretório `backend` (Futuro)
-O **backend** será desenvolvido utilizando **Java** e o framework **Spring Boot**. Essa escolha tecnológica visa garantir robustez, escalabilidade e facilidade de manutenção. O backend será responsável por armazenar e processar dados, oferecendo uma API RESTful para comunicação com o frontend.
+---
 
-#### Tecnologias e Estrutura do Backend
-- **Spring Boot**: Para o desenvolvimento do backend, aproveitando sua capacidade de criar APIs RESTful rapidamente e de maneira eficiente.
-- **Banco de Dados**: O banco de dados será **MySQL**, fornecendo uma solução de banco de dados relacional para armazenar os dados do sistema.
-- **JPA (Java Persistence API)**: Para interagir com o banco de dados MySQL de maneira eficiente e escalável.
-- **Spring Security**: Para garantir a segurança da aplicação, autenticação e autorização de usuários.
-- **Spring Data**: Para simplificar a manipulação de dados e integração com o banco de dados.
+## ⚙️ Diretório `backend` (Em Desenvolvimento)
+O backend será desenvolvido utilizando **Java** e **Spring Boot**. Ele será responsável por armazenar e processar os dados, oferecendo uma API **RESTful** para comunicação com o frontend.
 
-A arquitetura da aplicação seguirá o padrão **MVC (Model-View-Controller)**, com a separação de responsabilidades em camadas:
+### 🔹 Tecnologias e Arquitetura
+- **Spring Boot**: Desenvolvimento da API RESTful
+- **MySQL**: Banco de dados relacional
+- **JPA (Java Persistence API)**: Gerenciamento de persistência de dados
+- **Spring Security**: Autenticação e autorização de usuários
+- **Spring Data**: Simplificação do acesso ao banco de dados
 
+### 🔹 Estrutura do Backend
 ```
 /backend
 ├── /src
-│   ├── /controller    # Controladores que gerenciam as requisições HTTP
+│   ├── /controller    # Controladores de requisições HTTP
 │   ├── /model         # Modelos de dados e entidades
-│   ├── /repository    # Repositórios de acesso a dados
+│   ├── /repository    # Repositórios de acesso ao banco de dados
 │   ├── /service       # Lógica de negócios
 │   ├── /config        # Configurações de segurança e aplicação
-│   ├── /exception     # Tratamento de exceções
-│   └── Application.java  # Ponto de entrada da aplicação Spring Boot
-└── pom.xml            # Arquivo de dependências do projeto
+│   ├── /exception     # Tratamento de erros e exceções
+│   └── Application.java  # Ponto de entrada da aplicação
+└── pom.xml            # Gerenciamento de dependências
 ```
 
-### Fluxo de Desenvolvimento do Backend
+---
 
-1. **Configuração do ambiente**: Instalar **JDK 11 ou superior** e **Maven** para gerenciar as dependências do projeto. Também será necessário configurar o **MySQL** para armazenar os dados da aplicação.
-2. **Execução do Backend**: O backend será iniciado com o comando `mvn spring-boot:run` ou através da IDE de sua preferência.
-3. **Endpoints RESTful**: A API RESTful será responsável por permitir que o frontend se comunique com o backend para persistência de dados e funcionalidades diversas.
+## 🔗 Integração entre Frontend e Backend
+A comunicação entre o **frontend** e o **backend** será feita através de **requisições HTTP**, utilizando **Axios** no frontend. O backend disponibilizará endpoints RESTful para operações **CRUD** (Create, Read, Update, Delete).
 
-### Integração entre Frontend e Backend
-A comunicação entre o **frontend** (React) e o **backend** (Spring Boot) será feita através de **requisições HTTP** utilizando **Axios** no frontend. O backend disponibilizará **endpoints RESTful** para criar, ler, atualizar e excluir informações.
 
-## Fluxo de Desenvolvimento
+## 📊 Funcionalidades Principais
+✅ **Gestão de Vendas**: Registro de pedidos e análise de vendas
+✅ **Controle de Estoque**: Monitoramento de produtos disponíveis
+✅ **Verificação de Sobras de Pão**: Relatórios sobre produção e vendas para reduzir desperdícios
+✅ **Gestão de Notas em Prazo**: Monitoramento e alertas para pagamentos pendentes
+✅ **Folha de Ponto Digital**: Registro de entrada/saída de funcionários
+✅ **Painel de Indicadores**: Dashboard com gráficos e estatísticas
 
-1. **Configuração do ambiente**: Instale as dependências com `npm install` dentro da pasta `frontend` e configure o **JDK**, **Maven** e **MySQL** para o **backend**.
-2. **Execução do projeto**: Inicie o frontend com `npm start` e o backend com `mvn spring-boot:run`.
-3. **Organização das tarefas**: Novas funcionalidades são desenvolvidas em branches separadas antes do merge na branch principal.
 
-## Padrões de Desenvolvimento
-- Utilização do **React Hooks** para gerenciamento de estado no frontend.
-- Estilização com **CSS Modules e Bootstrap** no frontend.
-- No **backend**, será utilizada a arquitetura **MVC** com **Spring Boot**.
-- Comunicação entre frontend e backend via **API RESTful**.
-- **JPA** e **Spring Data** para integração com o banco de dados **MySQL**.
-- **Spring Security** para segurança e autenticação.
+## 🚀 Como Rodar o Projeto
+
+### 🔹 Configuração do Ambiente
+1. **Clonar o repositório**
+   ```sh
+   git clone https://github.com/seu-usuario/PaoFacil.git
+   ```
+2. **Configurar o backend:**
+   - Instalar **JDK 11 ou superior** e **Maven**
+   - Configurar **MySQL** com o banco de dados necessário
+   - Rodar o backend com:
+     ```sh
+     mvn spring-boot:run
+     ```
+
+3. **Configurar o frontend:**
+   - Instalar dependências
+     ```sh
+     cd frontend
+     npm install
+     ```
+   - Iniciar o servidor React
+     ```sh
+     npm start
+     ```
+
+
+## 🛠️ Tecnologias Utilizadas
+🔹 **Frontend**: React, Axios, Bootstrap, CSS Modules  
+🔹 **Backend**: Java, Spring Boot, Spring Security, MySQL, JPA  
+🔹 **Ferramentas**: Git, Docker (futuro), Swagger (futuro)
+
+
+
+## 📌 Roadmap Futuro
+📌 **Autenticação JWT** para segurança avançada  
+📌 **Dashboard com Gráficos** para análise de vendas e estoque  
+📌 **Notificações de Notas em Prazo** via WhatsApp/e-mail  
+📌 **Monitoramento de Produção** para otimizar a fabricação de pães  
+📌 **Dockerização** para facilitar a implantação  
+
+
