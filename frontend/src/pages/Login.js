@@ -1,21 +1,40 @@
 import React from "react";
 import { Container, Form, Button, Card, Alert } from "react-bootstrap";
+import axios from "axios";
 
 const Login = () => {
-  const [email, setEmail] = React.useState("");
+  const [username, setUsername] = React.useState(""); // Alterado de email para username
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
+  const [loading, setLoading] = React.useState(false); // Estado de carregamento
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validação simples
-    if (!email || !password) {
+    if (!username || !password) {
       setError("Por favor, preencha todos os campos.");
       return;
     }
     setError("");
-    // Lógica de login aqui (ex: chamada à API)
-    console.log("Email:", email, "Senha:", password);
+    setLoading(true);
+
+    try {
+      // Enviar os dados de login para a API com o username
+      const response = await axios.post("http://localhost:8080/api/auth/login", {
+        username, // Alterado para username
+        password,
+      });
+
+      // Sucesso, armazenar token ou redirecionar o usuário
+      console.log("Login bem-sucedido:", response.data);
+      // Exemplo de armazenamento de token
+      localStorage.setItem("authToken", response.data.token);
+      // Redirecionar para página principal após login (ajuste conforme necessário)
+      window.location.href = "/home"; // Exemplo de redirecionamento
+    } catch (err) {
+      setError("Nome de usuário ou senha incorretos. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -29,12 +48,12 @@ const Login = () => {
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
-              <Form.Label>Email</Form.Label>
+              <Form.Label>Nome de usuário</Form.Label>
               <Form.Control
-                type="email"
-                placeholder="Digite seu email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                placeholder="Digite seu nome de usuário"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)} // Alterado para username
                 className="form-control"
               />
             </Form.Group>
@@ -50,8 +69,13 @@ const Login = () => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" className="w-100 mb-3 btn-primary">
-              Entrar
+            <Button
+              variant="primary"
+              type="submit"
+              className="w-100 mb-3"
+              disabled={loading} // Desabilitar botão enquanto o login é processado
+            >
+              {loading ? "Carregando..." : "Entrar"}
             </Button>
 
             <div className="text-center">

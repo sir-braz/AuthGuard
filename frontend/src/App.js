@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import NavigationBar from "./components/Navbar";
 import Login from "./pages/Login";
 import Home from "./pages/Home.js";
+import Register from "./pages/Register.js";
 
 function App() {
   // Verifica se o usuário está logado (se existe um usuário salvo no localStorage)
@@ -32,6 +33,8 @@ function App() {
 
           {/* Página de Login acessível para todos */}
           <Route path="/login" element={<Login />} />
+
+          <Route path="/register" element={<Register />} />
 
           {/* Rota de fallback (caso o usuário tente acessar algo inválido) */}
           <Route path="*" element={<Navigate to="/" />} />
