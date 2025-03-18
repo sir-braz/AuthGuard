@@ -1,59 +1,47 @@
 package com.pao.facil.paofacil_backend.config;
 
-import com.pao.facil.paofacil_backend.security.JwtAuthenticationFilter;
-import com.pao.facil.paofacil_backend.util.JwtTokenProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
-import com.nimbusds.jose.jwk.source.ImmutableSecret;
-import com.nimbusds.jose.jwk.source.JWKSource;
-import com.nimbusds.jose.proc.SecurityContext;
-import javax.crypto.SecretKey;
-import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final SecretKey jwtKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authorizeRequests()
-                .antMatchers("/auth/login", "/auth/register").permitAll()
-                .anyRequest().authenticated()
-            .and()
-            .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
-                           UsernamePasswordAuthenticationFilter.class);
-        
-        return http.build();
-    }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(); // Usando o BCrypt para codificar senhas
     }
 
     @Bean
-    public JwtEncoder jwtEncoder() {
-        JWKSource<SecurityContext> jwks = new ImmutableSecret<>(jwtKey.getEncoded());
-        return new NimbusJwtEncoder(jwks);
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000")  // Permite CORS do frontend
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")  // Permite os métodos HTTP
+                        .allowedHeaders("Authorization", "Content-Type");  // Permite cabeçalhos específicos
+            }
+        };
+    }
+
+    @Configuration
+    public static class SecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.csrf().disable()  // Desabilita CSRF para facilitar os testes
+                    .authorizeRequests()
+                    .antMatchers("/api/auth/register", "/api/auth/login").permitAll()  // Permite o acesso ao registro sem autenticação
+                    .anyRequest().authenticated()  // Exige autenticação para outros endpoints
+                    .and()
+                    .cors();  // Habilita CORS
+        }
     }
 }

@@ -12,7 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "Content-Type", methods = {RequestMethod.GET, RequestMethod.POST})
 public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
