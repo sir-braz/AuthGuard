@@ -7,6 +7,7 @@ import com.pao.facil.paofacil_backend.service.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -24,15 +25,18 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
         try {
-            logger.info("Tentativa de registro de usuário: {}", registerRequest.getUsername());
-            authService.registerUser(registerRequest);
-            logger.info("Usuário registrado com sucesso: {}", registerRequest.getUsername());
-            return ResponseEntity.ok("Usuário registrado com sucesso");
+            // Chama o serviço de registro, que agora retorna uma string
+            String responseMessage = authService.registerUser(registerRequest);
+
+            // Retorna a mensagem com status 200 (OK)
+            return ResponseEntity.ok(responseMessage);
         } catch (Exception e) {
-            logger.error("Erro ao registrar usuário: {}", registerRequest.getUsername(), e);
-            return ResponseEntity.badRequest().body(e.getMessage());
+            // Caso ocorra uma exceção, retorna uma mensagem de erro com status 400 (Bad Request)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {

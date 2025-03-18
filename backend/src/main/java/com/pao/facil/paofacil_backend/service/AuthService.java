@@ -9,6 +9,7 @@ import com.pao.facil.paofacil_backend.util.JwtTokenProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class AuthService {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    public boolean registerUser(RegisterRequest registerRequest) {
+    public String registerUser(RegisterRequest registerRequest) {
         if (userRepository.findByUsername(registerRequest.getUsername()).isPresent()) {
             logger.warn("Tentativa de registro com nome de usuário já em uso: {}", registerRequest.getUsername());
             throw new RuntimeException("Nome de usuário já em uso.");
@@ -37,8 +38,13 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         userRepository.save(user);
         logger.info("Usuário registrado com sucesso: {}", registerRequest.getUsername());
-        return true;
+
+        return "Usuário registrado com sucesso"; // Aqui retornamos a mensagem de sucesso
     }
+
+
+
+
 
     public LoginResponse authenticate(LoginRequest loginRequest) {
         User user = userRepository.findByUsername(loginRequest.getUsername())
