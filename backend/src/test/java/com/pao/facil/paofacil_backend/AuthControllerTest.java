@@ -51,7 +51,6 @@ public class AuthControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // Teste do logout
     @Test
     public void testLogout() throws Exception {
         // Simula o comportamento do método void logout
@@ -65,6 +64,7 @@ public class AuthControllerTest {
                 .andExpect(status().isOk());
 
         // Verifica se o método logout foi chamado corretamente
-        verify(authService).logout(token);
+        verify(authService).logout(eq("mockToken")); // Usa eq() para garantir correspondência exata
     }
+
 }

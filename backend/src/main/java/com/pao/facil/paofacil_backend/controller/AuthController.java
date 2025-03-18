@@ -56,15 +56,14 @@ public class AuthController {
         return ResponseEntity.badRequest().body("Usuário não autenticado");
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {
-        try {
-            logger.info("Tentativa de logout para o token: {}", token);
-            // Implementação do logout, por exemplo, invalidação do token
+    @PostMapping("/logout") // Certifique-se de que esta anotação está correta
+    public ResponseEntity<String> logout(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7); // Remove "Bearer " para obter apenas o token real
+            authService.logout(token);
             return ResponseEntity.ok("Logout realizado com sucesso");
-        } catch (Exception e) {
-            logger.error("Erro ao realizar logout com o token: {}", token, e);
-            return ResponseEntity.badRequest().body("Erro ao realizar logout: " + e.getMessage());
         }
+        return ResponseEntity.badRequest().body("Token inválido ou ausente");
     }
+
 }
