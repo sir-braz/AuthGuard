@@ -17,13 +17,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # Passo 2: Configurar JDK 17
+    # Passo 2: Configurar JDK 17 (especificando a distribuição)
     - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
         java-version: '17'
+        distribution: 'temurin'  # Especifica a distribuição temurin do OpenJDK
 
-    # Passo 3: Entrar no diretório do backend
+    # Passo 3: Navegar para o diretório do backend
     - name: Navigate to backend directory
       run: cd backend
 
