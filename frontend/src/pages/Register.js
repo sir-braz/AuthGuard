@@ -1,18 +1,20 @@
 import React from "react";
 import { Container, Form, Button, Card, Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { API_BASE_URL, API_ENDPOINTS } from "../config/api.config";
 import axios from "axios";
 
 const Register = () => {
-  const [username, setUsername] = React.useState(""); // Alterei 'name' para 'username'
+  const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validação básica
     if (!username || !password || !confirmPassword) {
       setError("Por favor, preencha todos os campos.");
       return;
@@ -22,21 +24,26 @@ const Register = () => {
       return;
     }
 
-    setError(""); // Limpar mensagem de erro
+    setError("");
     setLoading(true);
 
     try {
-      // Enviar dados para o backend
-      const response = await axios.post("http://localhost:8080/api/auth/register", {
-        username, // Passando o username
-        password, // Passando a senha
-      });
+      const response = await axios.post(
+        `${API_BASE_URL}${API_ENDPOINTS.AUTH.REGISTER}`,
+        {
+          username,
+          password,
+        }
+      );
 
       console.log("Cadastro bem-sucedido:", response.data);
-      // Após o registro, você pode redirecionar para a página de login
-      window.location.href = "/login"; // Exemplo de redirecionamento para o login
+      navigate("/login");
     } catch (err) {
-      setError("Erro ao criar conta. Tente novamente.");
+      console.error("Erro no registro:", err.response?.data || err.message);
+      setError(
+        err.response?.data?.message || 
+        "Erro ao criar conta. Por favor, tente novamente."
+      );
     } finally {
       setLoading(false);
     }
@@ -57,8 +64,8 @@ const Register = () => {
               <Form.Control
                 type="text"
                 placeholder="Digite seu nome de usuário"
-                value={username} // Alterado para 'username'
-                onChange={(e) => setUsername(e.target.value)} // Alterado para 'username'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="form-control"
               />
             </Form.Group>
@@ -89,7 +96,7 @@ const Register = () => {
               variant="primary"
               type="submit"
               className="w-100 mb-3"
-              disabled={loading} // Desabilitar enquanto está carregando
+              disabled={loading}
             >
               {loading ? "Carregando..." : "Cadastrar"}
             </Button>
