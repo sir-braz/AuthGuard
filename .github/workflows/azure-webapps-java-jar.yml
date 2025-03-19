@@ -31,6 +31,9 @@ jobs:
           distribution: ${{ env.DISTRIBUTION }}
           cache: 'maven'
 
+      - name: Navigate to backend directory (if needed)
+        run: cd backend
+
       - name: Build with Maven
         run: mvn clean install
 
@@ -38,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: '${{ github.workspace }}/backend/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
