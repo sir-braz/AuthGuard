@@ -1,79 +1,48 @@
-name: Build and deploy Java app to Azure Web App
-
-env:
-  AZURE_WEBAPP_NAME: your-app-name         # Nome do seu Azure Web App
-  JAVA_VERSION: '17'                       # Versão do Java
-  DISTRIBUTION: zulu                       # Distribuição do Java (se estiver usando Zulu)
-  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}   # ID da sua assinatura Azure
-  AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}               # ID do Tenant Azure
-  AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}               # ID do Client/Service Principal
-  AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}       # Senha do Service Principal
+name: Deploy to Azure
 
 on:
   push:
-    branches: [ "main" ]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  id-token: write  # Esta permissão é necessária para obter o ID Token
+    branches:
+      - main  # Ou outra branch que você deseja usar para trigger o deploy
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Java version
-        uses: actions/setup-java@v4
-        with:
-          java-version: ${{ env.JAVA_VERSION }}
-          distribution: ${{ env.DISTRIBUTION }}
-          cache: 'maven'
-
-      # Executando o Maven diretamente no diretório correto
-      - name: Build with Maven
-        run: |
-          cd backend  # Navega para o diretório backend onde o pom.xml está localizado
-          mvn clean install  # Executa o comando Maven
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: java-app
-          path: '${{ github.workspace }}/backend/target/*.jar'
-
   deploy:
     runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy.outputs.webapp-url }}
 
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: java-app
+    # Passo 1: Checkout do código
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      # Ação para fazer login no Azure
-      - name: 'Login to Azure'
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          auth-type: 'SERVICE_PRINCIPAL'  # Usando o tipo correto para autenticação do Service Principal
+    # Passo 2: Configuração do JDK (se necessário)
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
 
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-          package: '*.jar'
-        env:
-          AZURE_WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}
-          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    # Passo 3: Login no Azure usando o Service Principal
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        auth-type: "SPN"  # Usando autenticação via Service Principal
+
+    # Passo 4: Build com Maven
+    - name: Build with Maven
+      run: |
+        cd backend   # A linha que vai para o diretório de backend
+        mvn clean install  # Rodando a build do Maven no diretório de backend
+
+    # Passo 5: Deploy no Azure WebApp
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+        slot-name: 'production'
+        package: backend/target/*.jar   # Caminho para o arquivo JAR gerado
+
+    # Passo 6: Logout do Azure
+    - name: Logout from Azure
+      run: az logout
