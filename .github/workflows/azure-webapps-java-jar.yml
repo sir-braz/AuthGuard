@@ -27,11 +27,10 @@ jobs:
           distribution: ${{ env.DISTRIBUTION }}  # Define a distribuição do Java (ex: zulu)
           cache: 'maven'                        # Usa cache para dependências do Maven
 
-      - name: Navigate to backend directory
-        run: cd backend  # Navega para o diretório 'backend' onde está o POM.xml
-
       - name: Build with Maven
-        run: mvn clean install  # Executa o build no diretório correto
+        run: |
+          cd backend  # Muda para o diretório 'backend'
+          mvn clean install  # Executa o build no diretório correto
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4      # Faz upload do artefato (JAR)
