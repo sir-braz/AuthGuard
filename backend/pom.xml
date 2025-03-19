@@ -15,7 +15,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.7</version>
+        <version>2.7.6</version> <!-- Versão mais recente do Spring Boot -->
         <relativePath /> <!-- Não é necessário especificar um caminho para o parent -->
     </parent>
 
@@ -25,20 +25,6 @@
     </properties>
 
     <dependencies>
-
-        <!-- SLF4J API -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.36</version>
-        </dependency>
-
-        <!-- Logback Implementation -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.10</version>
-        </dependency>
         <!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -60,39 +46,8 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-resource-server</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-logging</artifactId>
-        </dependency>
 
-        <!-- Spring Boot Test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- JUnit Jupiter API (only one version) -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.8.2</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- JUnit Jupiter Engine -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- JWT Dependencies -->
+        <!-- JJWT Dependencies -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -118,6 +73,28 @@
             <version>42.5.0</version>
         </dependency>
 
+        <!-- Spring Boot Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JUnit Jupiter API (only one version) -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.8.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JUnit Jupiter Engine -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Servlet API (provided scope) -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
@@ -127,9 +104,9 @@
         </dependency>
     </dependencies>
 
-
     <build>
         <plugins>
+            <!-- Maven Compiler Plugin to support Java 17 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -139,6 +116,20 @@
                     <target>17</target>
                 </configuration>
             </plugin>
+
+            <!-- Plugin para deploy no Azure Web App -->
+            <plugin>
+                <groupId>com.microsoft.azure</groupId>
+                <artifactId>azure-webapp-maven-plugin</artifactId>
+                <version>1.14.0</version>
+                <configuration>
+                    <appName>novoservidorwebapp</appName> <!-- Nome do seu App Service -->
+                    <resourceGroup>PaoFacil_RG</resourceGroup> <!-- Nome do Resource Group -->
+                </configuration>
+            </plugin>
+
+
+            <!-- Spring Boot Maven Plugin para empacotar o projeto -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -153,5 +144,4 @@
             <url>https://repo.maven.apache.org/maven2</url>
         </repository>
     </repositories>
-
 </project>
