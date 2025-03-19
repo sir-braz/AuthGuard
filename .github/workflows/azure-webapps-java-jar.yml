@@ -1,0 +1,62 @@
+name: Build and deploy JAR app to Azure Web App
+
+env:
+  AZURE_WEBAPP_NAME: paofacil-backend    # Nome do seu Azure Web App
+  JAVA_VERSION: '11'                     # Versão do Java
+  DISTRIBUTION: zulu                     # Distribuição do Java
+
+on:
+  push:
+    branches: [ "main" ]                 # Quando o código for enviado para o branch "main"
+  workflow_dispatch:                      # Permite a execução manual
+
+permissions:
+  contents: read                         # Permissões para ler o conteúdo do repositório
+
+jobs:
+  build:
+    runs-on: ubuntu-latest               # Usando o Ubuntu para construir o aplicativo
+
+    steps:
+      - uses: actions/checkout@v4        # Faz checkout do código do repositório
+
+      - name: Set up Java version
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}  # Define a versão do Java a ser usada
+          distribution: ${{ env.DISTRIBUTION }}  # Define a distribuição do Java (ex: zulu)
+          cache: 'maven'                        # Usa cache para dependências do Maven
+
+      - name: Build with Maven
+        run: |
+          cd backend  # Muda para o diretório 'backend'
+          mvn clean install  # Executa o build no diretório correto
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4      # Faz upload do artefato (JAR)
+        with:
+          name: java-app
+          path: 'backend/target/*.jar'  # Caminho para o JAR gerado no Maven (agora corretamente dentro de 'backend')
+
+  deploy:
+    permissions:
+      contents: none                        # Sem permissões de conteúdo necessárias para o deploy
+    runs-on: ubuntu-latest
+    needs: build                            # O deploy depende do job "build"
+    environment:
+      name: 'Development'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}  # URL da aplicação no Azure
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4    # Baixa o artefato do job de build
+        with:
+          name: java-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2        # Ação do Azure para deploy
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}  # Nome do seu Azure Web App
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Perfil de publicação do Azure
+          package: '*.jar'                    # Arquivo JAR a ser implantado
