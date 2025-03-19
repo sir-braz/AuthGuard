@@ -14,11 +14,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # Passo 2: Configuração do JDK (se necessário)
+    # Passo 2: Configuração do JDK 11
     - name: Set up JDK 11
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
+        java-version: '11'          # Especifica a versão do Java
+        distribution: 'zulu'        # Define a distribuição do JDK (pode ser 'zulu', 'adoptopenjdk', etc.)
 
     # Passo 3: Login no Azure usando o Service Principal
     - name: Azure Login
