@@ -27,7 +27,7 @@ jobs:
           distribution: ${{ env.DISTRIBUTION }}  # Define a distribuição do Java (ex: zulu)
           cache: 'maven'                        # Usa cache para dependências do Maven
 
-      - name: Change directory to backend
+      - name: Navigate to backend directory
         run: cd backend  # Navega para o diretório 'backend' onde está o POM.xml
 
       - name: Build with Maven
