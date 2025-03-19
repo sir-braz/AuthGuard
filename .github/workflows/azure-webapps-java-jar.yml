@@ -16,6 +16,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write  # Esta permissão é necessária para obter o ID Token
 
 jobs:
   build:
@@ -61,9 +62,10 @@ jobs:
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          auth-type: 'spn'  # Define o tipo de autenticação como Service Principal
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
