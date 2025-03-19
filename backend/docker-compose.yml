@@ -6,9 +6,9 @@ services:
     container_name: paofacil-backend
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://paofacil-server.postgres.database.azure.com:5432/paofacil-database?sslmode=require
-      SPRING_DATASOURCE_USERNAME: adminuser
-      SPRING_DATASOURCE_PASSWORD: novaSenha123
+      SPRING_DATASOURCE_URL: jdbc:postgresql://mybreadeasydatabase.cz2k64kkspre.us-east-2.rds.amazonaws.com:5432/breadeasy?sslmode=require
+      SPRING_DATASOURCE_USERNAME: postgres  # Nome de usuário do seu banco RDS
+      SPRING_DATASOURCE_PASSWORD: NovaSenhaSegura123  # Senha do seu banco RDS
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
     ports:
