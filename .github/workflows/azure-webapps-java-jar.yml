@@ -5,6 +5,9 @@ on:
     branches:
       - main  # Ou outra branch que você deseja usar para trigger o deploy
 
+permissions:
+  id-token: write   # Permite ao GitHub Actions gerar e usar o id-token para autenticação
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -21,7 +24,7 @@ jobs:
         java-version: '11'          # Especifica a versão do Java
         distribution: 'zulu'        # Define a distribuição do JDK (pode ser 'zulu', 'adoptopenjdk', etc.)
 
-    # Passo 3: Login no Azure usando o Service Principal
+    # Passo 3: Login no Azure usando o Service Principal (com suporte a id-token)
     - name: Azure Login
       uses: azure/login@v1
       with:
