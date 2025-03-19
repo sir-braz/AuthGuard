@@ -2,52 +2,26 @@ name: Deploy to Azure
 
 on:
   push:
-    branches:
-      - main  # Ou outra branch que você deseja usar para trigger o deploy
-
-permissions:
-  id-token: write   # Permite ao GitHub Actions gerar e usar o id-token para autenticação
+    branches: [main]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # Passo 1: Checkout do código
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    # Passo 2: Configuração do JDK 11
-    - name: Set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'          # Especifica a versão do Java
-        distribution: 'zulu'        # Define a distribuição do JDK (pode ser 'zulu', 'adoptopenjdk', etc.)
-
-    # Passo 3: Login no Azure usando o Service Principal (com suporte a id-token)
+    - uses: actions/checkout@v3
+    
     - name: Azure Login
       uses: azure/login@v1
       with:
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        auth-type: "SERVICE_PRINCIPAL"  # Corrigido para 'SERVICE_PRINCIPAL'
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    # Passo 4: Build com Maven
-    - name: Build with Maven
-      run: |
-        cd backend   # A linha que vai para o diretório de backend
-        mvn clean install  # Rodando a build do Maven no diretório de backend
-
-    # Passo 5: Deploy no Azure WebApp
-    - name: Deploy to Azure WebApp
+    - name: Move to backend directory
+      run: cd backend # Comando correto para mudar para o diretório backend
+    
+    - name: Deploy to Azure
       uses: azure/webapps-deploy@v2
       with:
-        app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-        slot-name: 'production'
-        package: backend/target/*.jar   # Caminho para o arquivo JAR gerado
-
-    # Passo 6: Logout do Azure
-    - name: Logout from Azure
-      run: az logout
+        app-name: 'paofacil-backend'   # Nome da aplicação no Azure
+        slot-name: 'production'        # Nome do slot de produção
+        package: '.'                    # O diretório onde o código está localizado
