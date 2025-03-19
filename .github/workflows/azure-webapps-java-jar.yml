@@ -37,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v4      # Faz upload do artefato (JAR)
         with:
           name: java-app
-          path: '${{ github.workspace }}/backend/target/*.jar'  # Caminho para o JAR gerado no Maven
+          path: 'backend/target/*.jar'  # Caminho para o JAR gerado no Maven (agora corretamente dentro de 'backend')
 
   deploy:
     permissions:
