@@ -22,7 +22,7 @@ jobs:
         run: mvn clean install -DskipTests
 
       - name: Upload Artifact for Deployment Job
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # Atualize para v3
         with:
           name: app-artifact
           path: ${{ github.workspace }}/target/*.jar  # Caminho para o arquivo JAR gerado
