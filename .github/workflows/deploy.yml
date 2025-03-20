@@ -1,48 +1,24 @@
-name: Deploy Backend to Azure App Service
+name: Deploy to Azure
 
 on:
   push:
-    branches:
-      - main  # Change this if deploying from another branch
+    branches: [main]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Build Project
-        working-directory: backend
-        run: mvn clean install -DskipTests
-
-      - name: Upload Artifact for Deployment
-        uses: actions/upload-artifact@v3
-        with:
-          name: springboot-artifact
-          path: backend/target/*.jar
-
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Download Artifact from Build Job
-        uses: actions/download-artifact@v3
-        with:
-          name: springboot-artifact
-
-      - name: Deploy to Azure App Service
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'NovoAppWebApp'  # Ensure this matches your Azure App Service name
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: '*.jar'
+    - uses: actions/checkout@v3
+    
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}  # Usando o secret para autenticação
+    
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'NovoAppWebApp'  # Nome da aplicação no Azure
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Publicar usando o profile
+        package: '.'  # Pacote para deploy (ajuste conforme necessário)
