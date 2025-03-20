@@ -13,23 +13,27 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v3
 
-      # Passo 2: Configurar o Java (caso seu projeto seja Java)
+      # Passo 2: Navegar para o diretório backend
+      - name: Move to backend directory
+        run: cd backend  # Mude para o diretório do backend
+
+      # Passo 3: Configurar o Java (caso seu projeto seja Java)
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'  # Escolha a distribuição do Java (Temurin é um exemplo)
           java-version: '11'  # Defina a versão do Java que você está usando, por exemplo, 11 ou 17
 
-      # Passo 3: Build do projeto
+      # Passo 4: Build do projeto
       - name: Build Project
         run: mvn clean install -DskipTests  # Para um projeto Maven, ajuste se necessário
 
-      # Passo 4: Upload do artefato gerado (JAR ou WAR) para uso no deploy
+      # Passo 5: Upload do artefato gerado (JAR ou WAR) para uso no deploy
       - name: Upload Artifact for Deployment Job
         uses: actions/upload-artifact@v2
         with:
           name: springboot-artifact  # Nome do artefato
-          path: ${{ github.workspace }}/target/*.jar  # Caminho do arquivo gerado após o build
+          path: ${{ github.workspace }}/backend/target/*.jar  # Caminho do arquivo gerado após o build
 
   deploy:
     runs-on: ubuntu-latest
