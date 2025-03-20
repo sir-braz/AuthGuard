@@ -9,51 +9,43 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 🔹 Passo 1: Checkout do código-fonte
       - name: Checkout Source
         uses: actions/checkout@v3
 
-      # 🔹 Passo 2: Configurar Java e Maven
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '11'
 
-      # 🔹 Passo 3: Build da aplicação Spring Boot dentro da pasta backend
       - name: Build Project
         run: mvn clean install -DskipTests
         working-directory: backend
 
-      # 🔹 Passo 4: Verificar se o JAR foi gerado corretamente
       - name: List files in target folder
         run: ls -l backend/target
 
-      # 🔹 Passo 5: Upload do artefato (JAR) para a próxima etapa
       - name: Upload Artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: backend-jar
-          path: backend/target/*.jar  # Envia o JAR para a próxima etapa
+          path: backend/target/*.jar
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      # 🔹 Passo 6: Baixar o artefato gerado na etapa de build
       - name: Download Artifact from build job
         uses: actions/download-artifact@v2
         with:
           name: backend-jar
 
-      # 🔹 Passo 7: Testar se o GitHub Actions consegue alcançar o Azure
       - name: Test DNS resolution
-        run: nslookup breadeasy-azure.azurewebsites.net
+        run: nslookup breadeasy-azure-egf7hpaefvb0egg2.canadacentral-01.azurewebsites.net
 
-      # 🔹 Passo 8: Deploy no Azure App Service
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'breadeasy-azure'  # Nome do App Service corrigido
+          app-name: 'breadeasy-azure-egf7hpaefvb0egg2'  # Nome correto do App Service
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: '*.jar'  # Envia o JAR para o Azure
+          package: '*.jar'
