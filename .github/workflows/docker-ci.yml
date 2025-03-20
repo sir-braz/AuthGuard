@@ -36,7 +36,7 @@ jobs:
 
       - name: Run Docker Compose (se necessário)
         run: |
-          docker-compose -f docker-compose.yml up -d  # Se precisar rodar containers com Docker Compose
+          docker-compose -f ./backend/docker-compose.yml up -d  # Caminho correto para o docker-compose.yml no diretório backend
 
       - name: Test Docker container
         run: |
