@@ -13,7 +13,6 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v3
 
-      # 🔹 Passo 2: Configurar Java e Maven
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
