@@ -3,7 +3,7 @@ name: Azure Deploy
 on:
   push:
     branches:
-      - main  # ou qualquer outra branch que você esteja utilizando
+      - main
 
 jobs:
   deploy:
@@ -12,6 +12,9 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Set up Azure CLI
+      uses: azure/setup-azure-cli@v1 #ou @v2, teste qual funciona melhor
 
     - name: Log in to Azure
       uses: azure/login@v1
