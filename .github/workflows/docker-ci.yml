@@ -3,21 +3,21 @@ name: Build and Deploy Docker Image
 on:
   push:
     branches:
-      - main  # Ou a branch que você deseja monitorar
+      - main  # ou a branch que você deseja monitorar
 
 jobs:
   build:
     runs-on: ubuntu-latest  # O ambiente em que o GitHub Actions rodará o job
 
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v2  # Baixa o código do repositório para o runner
+      - name: Checkout repository
+        uses: actions/checkout@v3  # Versão mais recente do actions/checkout
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2  # Configura o Docker Buildx (para build multiplataforma)
+        uses: docker/setup-buildx-action@v2  # Versão mais recente do setup-buildx
 
       - name: Cache Docker layers
-        uses: actions/cache@v2
+        uses: actions/cache@v3  # Versão mais recente do actions/cache
         with:
           path: /tmp/.buildx-cache  # Caminho do cache Docker
           key: ${{ runner.os }}-docker-${{ github.sha }}
