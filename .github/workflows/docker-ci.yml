@@ -1,53 +1,34 @@
-name: Build and Deploy Docker Image
+name: Build and Push Docker Image
 
 on:
   push:
     branches:
-      - main  # ou a branch que você deseja monitorar
+      - main  # Trigger o workflow apenas para o branch main
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # O ambiente em que o GitHub Actions rodará o job
+    runs-on: ubuntu-latest  # Usando a imagem mais recente do Ubuntu
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3  # Versão mais recente do actions/checkout
+    # 1. Verificar o repositório
+    - name: Check out the repository
+      uses: actions/checkout@v2  # Faz checkout do repositório
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2  # Versão mais recente do setup-buildx
+    # 2. Configurar o Docker Buildx
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2  # Configura a ferramenta Buildx para builds multi-plataforma
 
-      - name: Install Docker Compose
-        run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-          docker-compose --version  # Verifica se o docker-compose foi instalado corretamente
+    # 3. Logar no Docker Hub usando os secrets
+    - name: Log in to Docker Hub
+      run: |
+        echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin  # Realiza o login no Docker Hub de forma segura
 
-      - name: Cache Docker layers
-        uses: actions/cache@v3  # Versão mais recente do actions/cache
-        with:
-          path: /tmp/.buildx-cache  # Caminho do cache Docker
-          key: ${{ runner.os }}-docker-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-docker-
+    # 4. Construir a imagem Docker
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/your-image-name .  # Construa a imagem com o nome do seu repositório no Docker Hub
 
-      - name: Build Docker image
-        run: |
-          docker build -t paofacil-backend ./backend  # Faz o build da imagem do backend
-
-      - name: Run Docker Compose (se necessário)
-        run: |
-          docker-compose -f ./backend/docker-compose.yml up -d  # Caminho correto para o docker-compose.yml no diretório backend
-
-      - name: Test Docker container
-        run: |
-          docker ps  # Verifica se o container está em execução
-
-      - name: Push Docker image to Docker Hub (opcional)
-        run: |
-          echo ${{ secrets.DOCKER_USERNAME }} | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker tag paofacil-backend ${{ secrets.DOCKER_USERNAME }}/paofacil-backend:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/paofacil-backend:latest  # Faz o push da imagem para o Docker Hub (se necessário)
-
-      - name: Deploy Backend (opcional)
-        run: |
-          ssh user@server 'docker pull ${{ secrets.DOCKER_USERNAME }}/paofacil-backend:latest && docker run -d ${{ secrets.DOCKER_USERNAME }}/paofacil-backend:latest'
+    # 5. Enviar a imagem para o Docker Hub
+    - name: Push Docker image
+      run: |
+        docker push ${{ secrets.DOCKER_USERNAME }}/your-image-name  # Envia a imagem para o Docker Hub
