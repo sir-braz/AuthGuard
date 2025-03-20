@@ -1,0 +1,55 @@
+name: Deploy Backend to Azure App Service
+
+on:
+  push:
+    branches:
+      - deploy-to-azure-app-service  # Roda quando há push nessa branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 🔹 Passo 1: Checkout do código-fonte
+      - name: Checkout Source
+        uses: actions/checkout@v3
+
+      # 🔹 Passo 2: Configurar Java e Maven
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      # 🔹 Passo 3: Build da aplicação Spring Boot dentro da pasta backend
+      - name: Build Project
+        run: mvn clean install -DskipTests
+        working-directory: backend
+
+      # 🔹 Passo 4: Verificar se o JAR foi gerado corretamente
+      - name: List files in target folder
+        run: ls -l backend/target
+
+      # 🔹 Passo 5: Upload do artefato (JAR) para a próxima etapa
+      - name: Upload Artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: backend-jar
+          path: backend/target/*.jar  # Envia o JAR para a próxima etapa
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      # 🔹 Passo 6: Baixar o artefato gerado na etapa de build
+      - name: Download Artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: backend-jar
+
+      # 🔹 Passo 7: Deploy no Azure App Service
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'NovoAppWebApp'  # Nome do App Service no Azure
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Segredo do Azure
+          package: '*.jar'  # Envia o JAR para o Azure
