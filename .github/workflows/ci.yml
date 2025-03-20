@@ -21,8 +21,12 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'temurin'  # Atualização para o Adoptium (temurin)
+          distribution: 'temurin'  # Usando a distribuição 'temurin'
 
-      # Passo 3: Rodar testes e build com Maven
-      - name: Executar Maven Build
-        run: mvn clean install -f backend/pom.xml
+      # Passo 3: Instalar dependências e rodar os testes
+      - name: Rodar testes com Maven
+        run: mvn clean test -f backend/pom.xml
+
+      # Passo 4: Rodar build do projeto
+      - name: Build do projeto
+        run: mvn package -f backend/pom.xml
