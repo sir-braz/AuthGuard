@@ -6,15 +6,16 @@ services:
     container_name: paofacil-backend
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://mybreadeasydatabase.cz2k64kkspre.us-east-2.rds.amazonaws.com:5432/breadeasy?sslmode=require
-      SPRING_DATASOURCE_USERNAME: postgres  # Nome de usuário do seu banco RDS
-      SPRING_DATASOURCE_PASSWORD: NovaSenhaSegura123  # Senha do seu banco RDS
+      SPRING_DATASOURCE_URL: jdbc:postgresql://breadeasy-app.postgres.database.azure.com:5432/breadeasy_db?sslmode=require
+      SPRING_DATASOURCE_USERNAME: breadeasy  # Nome de usuário do Azure PostgreSQL
+      SPRING_DATASOURCE_PASSWORD: 123456789@Aa  # Senha do usuário do banco de dados
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
     ports:
-      - "8082:8080"
+      - "8082:8080"  # Mapeia a porta 8082 do host para a porta 8080 do container
     networks:
       - paofacil-network
 
 networks:
   paofacil-network:
+    driver: bridge  # Tipo de rede para o Docker Compose
