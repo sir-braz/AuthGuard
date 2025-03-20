@@ -13,6 +13,7 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v3
 
+      # 🔹 Passo 2: Configurar Java e Maven
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
@@ -45,10 +46,14 @@ jobs:
         with:
           name: backend-jar
 
-      # 🔹 Passo 7: Deploy no Azure App Service
+      # 🔹 Passo 7: Testar se o GitHub Actions consegue alcançar o Azure
+      - name: Test DNS resolution
+        run: nslookup breadeasy-azure.azurewebsites.net
+
+      # 🔹 Passo 8: Deploy no Azure App Service
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'NovoAppWebApp'  # Nome do App Service no Azure
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Segredo do Azure
+          app-name: 'breadeasy-azure'  # Nome do App Service corrigido
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: '*.jar'  # Envia o JAR para o Azure
