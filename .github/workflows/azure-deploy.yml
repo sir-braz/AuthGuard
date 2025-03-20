@@ -1,0 +1,26 @@
+name: Azure Deploy
+
+on:
+  push:
+    branches:
+      - main  # Você pode mudar para a branch que preferir
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Azure CLI
+      uses: azure/setup-azurecli@v1
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Deploy to Azure App Service
+      run: |
+        az webapp deploy --resource-group integration-group --name meuappname --src-path target/paofacil-backend-0.0.1-SNAPSHOT.jar
