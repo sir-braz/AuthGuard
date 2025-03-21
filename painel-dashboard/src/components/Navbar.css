@@ -1,0 +1,72 @@
+/* Customização da Navbar */
+.navbar-custom {
+  background-color: #343a40; /* Cor de fundo escura */
+  padding: 10px 20px;
+  border-bottom: 2px solid #222; /* Adiciona uma borda inferior para separar a navbar do conteúdo */
+}
+
+/* Logo do Dashboard */
+.brand-logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #ffffff;
+  letter-spacing: 2px;
+}
+
+/* Link de navegação */
+.nav-item {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Ícones da Navbar */
+.nav-icon {
+  font-size: 1.25rem;
+  margin-right: 8px;
+}
+
+/* Texto da navegação */
+.nav-text {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Efeito de hover */
+.nav-item:hover {
+  background-color: #495057; /* Cor de fundo mais clara ao passar o mouse */
+  color: #00bcd4; /* Muda a cor do texto para destaque */
+  border-radius: 4px;
+}
+
+/* Link ativo - quando a página está selecionada */
+.nav-item.active {
+  background-color: #00bcd4;
+  color: #fff;
+  border-radius: 4px;
+}
+
+/* Botão de logout */
+.logout-btn {
+  margin-left: 20px;
+  font-weight: 500;
+}
+
+/* Responsividade: Navbar para dispositivos móveis */
+@media (max-width: 992px) {
+  .navbar-custom {
+    padding: 10px;
+  }
+
+  .nav-item {
+    font-size: 0.9rem;
+  }
+
+  .logout-btn {
+    margin-top: 10px;
+  }
+}
