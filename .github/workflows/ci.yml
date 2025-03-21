@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'temurin'  # Usando a distribuição 'temurin'
+          distribution: 'temurin'
 
       # Passo 3: Rodar testes com Maven
       - name: Rodar testes com Maven
@@ -31,31 +31,16 @@ jobs:
       - name: Build do projeto
         run: mvn package -f backend/pom.xml
 
-      # Passo 5: Configuração do Docker Buildx (para multi-plataforma)
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+      # Passo 5: Login no Azure usando o Service Principal
+      - name: Login no Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # Passo 6: Login no Docker Hub
-      - name: Log in to Docker Hub
-        run: |
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
-
-      # Passo 7: Construir a imagem Docker
-      - name: Build Docker image
-        run: |
-          docker build -f ./backend/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/your-image-name ./backend
-
-      # Passo 8: Enviar a imagem Docker para o Docker Hub
-      - name: Push Docker image
-        run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/your-image-name
-
-      # Passo 9: Deploy no Azure App Service
+      # Passo 6: Deploy no Azure App Service
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}  # Nome do Azure App Service
-          slot-name: 'production'  # Nome do slot (pode ser 'production' ou outro slot configurado)
-          images: ${{ secrets.DOCKER_USERNAME }}/your-image-name:latest  # Imagem Docker a ser usada
-        env:
-          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}  # Credenciais de acesso ao Azure
+          app-name: "meuappname"  # Substitua pelo nome do seu App Service
+          slot-name: 'production'  # Slot, se necessário
+          images: ${{ secrets.DOCKER_USERNAME }}/your-image-name:latest  # Imagem Docker
