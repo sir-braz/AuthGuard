@@ -1,29 +1,38 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Mudou o Switch para Routes e o Route usa 'element'
-import Navigation from './components/Navigation'; // Importando a barra de navegação
-import Dashboard from './components/Dahboard'; // Componente de Dashboard
-import Vendas from './components/Sales'; // Página de Vendas
-import Estoque from './components/Stock'; // Página de Estoque
-import Ponto from './components/TimeSheet'; // Página de Folha de Ponto
-import Indicadores from './components/Indicators'; // Página de Indicadores
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; 
+import NewNavbar from './components/Navbar/NewNavbar'; 
+import Dashboard from './components/Dashboard/Dahboard'; 
+import Vendas from './components/Sales/Sales'; 
+import Estoque from './components/Stock/Stock'; 
+import Ponto from './components/Time/TimeSheet'; 
+import Indicadores from './components/Indicator/Indicators'; 
+import Login from './components/Login/Login'; 
+import './App.css'; 
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
   return (
-    <Router>
-      <Navigation /> {/* Barra de navegação */}
-      <div className="content">
+    <div className="App">
+      <Router>
+        {isAuthenticated && <NewNavbar />}
         <Routes>
-          {/* Usando 'element' para renderizar os componentes */}
-          <Route path="/home" element={<Dashboard />} />
-          <Route path="/vendas" element={<Vendas />} />
-          <Route path="/estoque" element={<Estoque />} />
-          <Route path="/ponto" element={<Ponto />} />
-          <Route path="/indicators" element={<Indicadores />} />
-          <Route path="/" element={<Dashboard />} /> {/* Página inicial (Home) */}
+          <Route path="/" element={!isAuthenticated ? <Login setIsAuthenticated={setIsAuthenticated} /> : <Navigate to="/home" />} />
+          <Route path="/home" element={isAuthenticated ? <Dashboard /> : <Navigate to="/" />} />
+          <Route path="/vendas" element={isAuthenticated ? <Vendas /> : <Navigate to="/" />} />
+          <Route path="/estoque" element={isAuthenticated ? <Estoque /> : <Navigate to="/" />} />
+          <Route path="/ponto" element={isAuthenticated ? <Ponto /> : <Navigate to="/" />} />
+          <Route path="/indicators" element={isAuthenticated ? <Indicadores /> : <Navigate to="/" />} />
         </Routes>
-      </div>
-    </Router>
+      </Router>
+    </div>
   );
 };
 
