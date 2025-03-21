@@ -1,0 +1,30 @@
+.register-container {
+    margin-top: 50px;
+  }
+  
+  .register-col {
+    padding: 20px;
+  }
+  
+  .form-card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+  }
+  
+  .btn-submit {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .alert {
+    margin-bottom: 20px;
+  }
+  
+  .text-center {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  

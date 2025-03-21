@@ -1,106 +1,94 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
-  const [isRegistering, setIsRegistering] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if ((username === 'admin' && password === 'admin123') || (username === 'user' && password === 'admin')) {
-      localStorage.setItem('token', 'fake-token');
-      setIsAuthenticated(true);
-      navigate('/home');
-    } else {
-      setError('Usuário ou senha inválidos!');
-    }
-  };
+    setLoading(true);
+    setError('');
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    if (name && email && password) {
-      localStorage.setItem('token', 'fake-token');
-      setIsAuthenticated(true);
-      navigate('/home');
-    } else {
-      setError('Por favor, preencha todos os campos!');
+    const userData = { username, password };
+
+    try {
+      const response = await fetch('http://www.paofacil.xyz/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData),
+      });
+
+      const responseBody = await response.json();
+
+      if (response.ok) {
+        // Armazenando o token no localStorage
+        localStorage.setItem('token', responseBody.token);
+
+        setIsAuthenticated(true);
+        navigate('/home'); // Redireciona para a página inicial
+      } else {
+        setError(responseBody.message || 'Usuário ou senha inválidos!');
+      }
+    } catch (error) {
+      setError('Erro de rede: ' + error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Container>
+    <Container className="login-container">
       <Row className="justify-content-center">
-        <Col md={4}>
-          <h2>{isRegistering ? 'Registro' : 'Login'}</h2>
-          {error && <div className="alert alert-danger">{error}</div>}
-          <Form onSubmit={isRegistering ? handleRegister : handleLogin}>
-            {isRegistering && (
-              <Form.Group controlId="formBasicName">
-                <Form.Label>Nome</Form.Label>
+        <Col md={6} lg={4} className="login-col">
+          <div className="form-card">
+            <h2 className="text-center mb-4">Login</h2>
+            {error && <div className="alert alert-danger">{error}</div>}
+            
+            <Form onSubmit={handleLogin}>
+              <Form.Group controlId="formBasicUsername">
+                <Form.Label>Usuário</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Digite seu nome"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Digite seu nome de usuário"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                 />
               </Form.Group>
-            )}
 
-            {isRegistering && (
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>E-mail</Form.Label>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Senha</Form.Label>
                 <Form.Control
-                  type="email"
-                  placeholder="Digite seu e-mail"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  type="password"
+                  placeholder="Digite sua senha"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </Form.Group>
-            )}
 
-            <Form.Group controlId="formBasicUsername">
-              <Form.Label>Usuário</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Digite seu usuário"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Senha</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Digite sua senha"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </Form.Group>
-
-            <Button variant="primary" type="submit" className="w-100 mt-3">
-              {isRegistering ? 'Registrar' : 'Login'}
-            </Button>
-
-            <Button
-              variant="link"
-              className="w-100 mt-2"
-              onClick={() => setIsRegistering(!isRegistering)}
-            >
-              {isRegistering ? 'Já tem uma conta? Faça login' : 'Não tem uma conta? Registre-se'}
-            </Button>
-          </Form>
+              <Button 
+                variant="primary" 
+                type="submit" 
+                className="w-100 mt-4 btn-submit"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <Spinner animation="border" size="sm" /> Entrando...
+                  </>
+                ) : (
+                  'Login'
+                )}
+              </Button>
+            </Form>
+          </div>
         </Col>
       </Row>
     </Container>
