@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; 
 import NewNavbar from './components/Navbar/NewNavbar'; 
 import Dashboard from './components/Dashboard/Dahboard'; 
@@ -7,55 +7,101 @@ import Estoque from './components/Stock/Stock';
 import Ponto from './components/Time/TimeSheet'; 
 import Indicadores from './components/Indicator/Indicators'; 
 import Login from './components/Login/Login'; 
-import Register from './components/Register/Register';  // Importe o componente Register
+import Register from './components/Register/Register';  
 import './App.css'; 
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token); // Verifica se há token para definir autenticação
+  }, []);
+
+  // Função para login
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  };
+
+  // Função para logout
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
+  };
+
+  // Componente de Rota Protegida
+  const ProtectedRoute = ({ children }) => {
+    return isAuthenticated ? children : <Navigate to="/login" />;
+  };
+
   return (
-    <div className="App">
-      <Router>
-        {isAuthenticated && <NewNavbar />}
+    <Router>
+      <div className="App">
+        {isAuthenticated && <NewNavbar onLogout={handleLogout} />}
+
         <Routes>
-          {/* Rota de Login */}
+          {/* Redirecionamento automático: "/" vai para "/home" se autenticado, senão "/login" */}
           <Route 
             path="/" 
-            element={!isAuthenticated ? <Login setIsAuthenticated={setIsAuthenticated} /> : <Navigate to="/home" />} 
+            element={<Navigate to={isAuthenticated ? "/home" : "/login"} />} 
           />
 
-          {/* Rota de Registro */}
+          {/* Página de Login */}
+          <Route 
+            path="/login" 
+            element={isAuthenticated ? <Navigate to="/home" /> : <Login setIsAuthenticated={handleLogin} />} 
+          />
+
+          {/* Página de Registro */}
           <Route 
             path="/register" 
-            element={<Register />}  // Não importa se está autenticado ou não, ele vai para a página de registro
+            element={isAuthenticated ? <Navigate to="/home" /> : <Register />}  
           />
-          
-          {/* Rota de Home */}
+
+          {/* Rotas Protegidas */}
           <Route 
             path="/home" 
-            element={isAuthenticated ? <Dashboard /> : <Navigate to="/" />} 
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
           />
-          
-          {/* Outras rotas */}
           <Route 
             path="/vendas" 
-            element={isAuthenticated ? <Vendas /> : <Navigate to="/" />} 
+            element={
+              <ProtectedRoute>
+                <Vendas />
+              </ProtectedRoute>
+            } 
           />
           <Route 
             path="/estoque" 
-            element={isAuthenticated ? <Estoque /> : <Navigate to="/" />} 
+            element={
+              <ProtectedRoute>
+                <Estoque />
+              </ProtectedRoute>
+            } 
           />
           <Route 
             path="/ponto" 
-            element={isAuthenticated ? <Ponto /> : <Navigate to="/" />} 
+            element={
+              <ProtectedRoute>
+                <Ponto />
+              </ProtectedRoute>
+            } 
           />
           <Route 
             path="/indicators" 
-            element={isAuthenticated ? <Indicadores /> : <Navigate to="/" />} 
+            element={
+              <ProtectedRoute>
+                <Indicadores />
+              </ProtectedRoute>
+            } 
           />
         </Routes>
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 };
 

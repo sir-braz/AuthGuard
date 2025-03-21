@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col, Spinner } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 
 const Login = ({ setIsAuthenticated }) => {
@@ -88,6 +88,12 @@ const Login = ({ setIsAuthenticated }) => {
                 )}
               </Button>
             </Form>
+
+            {/* Link para a página de registro */}
+            <div className="text-center mt-3">
+              <span>Ainda não tem uma conta?</span>{' '}
+              <Link to="/register">Registre-se aqui</Link>
+            </div>
           </div>
         </Col>
       </Row>
