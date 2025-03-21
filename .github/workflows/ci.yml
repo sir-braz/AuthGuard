@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Spring Boot CI/CD Pipeline
 
 on:
   push:
@@ -37,10 +37,10 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # Passo 6: Deploy no Azure App Service para o backend
-      - name: Deploy to Azure App Service (Backend)
+      # Passo 6: Deploy no Azure App Service
+      - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "novoappname"  # Substitua pelo nome do seu App Service
+          app-name: "novoappname"  # Substitua com o nome correto do seu App Service
           slot-name: 'production'  # Caso esteja usando slots de produção
           package: 'backend/target/paofacil-backend-0.0.1-SNAPSHOT.jar'  # Caminho para o JAR gerado
