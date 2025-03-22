@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, IconButton, Divider, Box, useMediaQuery } from '@mui/material';
-import { FaHome, FaChartBar, FaBox, FaArrowRight, FaBreadSlice, FaUser } from 'react-icons/fa';
-import { useTheme } from '@mui/material/styles';
+import { Link, useNavigate } from 'react-router-dom';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, Box, Typography } from '@mui/material';
+import { FaHome, FaChartBar, FaBox, FaBreadSlice, FaUser, FaSignOutAlt, FaRegUserCircle, FaShoppingCart } from 'react-icons/fa';
 import './Sidebar.css';
 
 const defaultMenuItems = [
@@ -13,74 +12,100 @@ const defaultMenuItems = [
   { text: 'Perfil', icon: <FaUser />, link: '/profile' },
 ];
 
-const Sidebar = ({ menuItems = defaultMenuItems, logoText = "Sir Braz" }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Verifica se é mobile
+const Sidebar = ({ menuItems = defaultMenuItems, logoText = "PaoFacil" }) => {
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    // Remove o token do localStorage
+    localStorage.removeItem('authToken');
+  
+    // Atualiza a página (força um reload) e redireciona para a página de login
+    window.location.reload();
+    navigate('/login');
+  };
   return (
-    <Box sx={{ display: 'flex' }}>
-      {/* Botão de alternância para abrir/fechar a sidebar em telas pequenas */}
-      {isMobile && (
-        <IconButton
-          sx={{
-            position: 'absolute',
-            top: 16,
-            left: '16px',
-            zIndex: 1201,
-            color: theme.palette.primary.contrastText,
-          }}
-          aria-label="Abrir Sidebar"
-        >
-          <FaArrowRight />
-        </IconButton>
-      )}
-
-      {/* Drawer (Sidebar) */}
-      <Drawer
-        sx={{
-          width: isMobile ? 200 : 240,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: isMobile ? 200 : 240,
-            backgroundColor: theme.palette.background.default,
-            boxSizing: 'border-box',
-            borderRight: '1px solid rgba(0, 0, 0, 0.12)',
-            paddingTop: '64px', // Para compensar o Header
-            transition: 'width 0.3s ease',
-            color: theme.palette.text.primary,
-          },
-        }}
-        variant={isMobile ? "temporary" : "permanent"} // 'temporary' para dispositivos móveis, 'permanent' para desktop
-        anchor="left"
-        open={!isMobile} // No mobile, o Drawer será fechado por padrão
-        ModalProps={{
-          keepMounted: true, // Melhor performance em dispositivos móveis
-        }}
-      >
-        <Box sx={{ padding: 2 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <FaBreadSlice className="sidebar-logo" style={{ color: '#d4a373', fontSize: '36px' }} />
-            {!isMobile && (
-              <Box sx={{ marginLeft: 1, fontSize: '18px', fontWeight: '600', color: theme.palette.text.primary }}>
-                {logoText}
-              </Box>
-            )}
+    <Drawer
+      variant="permanent"
+      anchor="left"
+      classes={{ paper: 'sidebar' }} // Aplica a classe CSS fixa para a sidebar escura
+    >
+      <Box>
+        {/* Logo */}
+        <Box className="logo-box">
+          <FaBreadSlice style={{ color: '#d4a373', fontSize: '36px' }} />
+          <Box className="logo-text">
+            {logoText}
           </Box>
-          <Divider sx={{ marginY: 2 }} />
+        </Box>
 
+        {/* Slogan */}
+        <Box className="slogan">
+          "Reduzindo o desperdício, aproveitando o melhor do pão!"
+        </Box>
+
+        <Divider sx={{ marginY: 2, backgroundColor: '#ffffff33' }} />
+
+        {/* Informações do Usuário */}
+        <Box sx={{ padding: '16px 0', display: 'flex', alignItems: 'center' }}>
+          <FaRegUserCircle style={{ fontSize: '36px', color: '#fbc02d' }} />
+          <Box sx={{ marginLeft: '12px', color: '#ffffff' }}>
+            <Typography variant="body2">Bem-vindo, João!</Typography>
+            <Typography variant="caption">Administrador</Typography>
+          </Box>
+        </Box>
+
+        <Divider sx={{ marginY: 2, backgroundColor: '#ffffff33' }} />
+
+        {/* Menu */}
+        <List>
+          {menuItems.map((item, index) => (
+            <ListItem 
+              key={index} 
+              component={Link} 
+              to={item.link} 
+              sx={{ paddingY: 1, color: '#ffffff' }} // Garantir que o texto seja branco
+            >
+              <ListItemIcon sx={{ color: '#ffffff' }}> {/* Ícones brancos */}
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText 
+                primary={item.text} 
+                sx={{ color: '#ffffff' }} // Garantir que o texto seja branco
+              />
+            </ListItem>
+          ))}
+        </List>
+
+        <Divider sx={{ marginY: 2, backgroundColor: '#ffffff33' }} />
+
+        {/* Categorias */}
+        <Box className="category-divider">
+          <Typography variant="body2" sx={{ color: '#ffffff' }}>Gestão de Pedidos</Typography>
           <List>
-            {menuItems.map((item, index) => (
-              <ListItem key={index} component={Link} to={item.link} sx={{ paddingY: 1 }}>
-                <ListItemIcon sx={{ color: theme.palette.text.primary }}>
-                  {item.icon}
-                </ListItemIcon>
-                {!isMobile && <ListItemText primary={item.text} sx={{ color: theme.palette.text.primary }} />}
-              </ListItem>
-            ))}
+            <ListItem component={Link} to="/pedidos" sx={{ paddingY: 1 }}>
+              <ListItemIcon sx={{ color: '#ffffff' }}>
+                <FaShoppingCart />
+              </ListItemIcon>
+              <ListItemText primary="Pedidos" sx={{ color: '#ffffff' }} />
+            </ListItem>
           </List>
         </Box>
-      </Drawer>
-    </Box>
+
+        {/* Botão de Ação Rápida */}
+        <Box className="action-btn" onClick={() => navigate('/pedido/novo')}>
+          <FaShoppingCart style={{ marginRight: '8px' }} />
+          Fazer Pedido
+        </Box>
+      </Box>
+
+      {/* Botão de Logout */}
+      <Box sx={{ paddingBottom: '16px' }}>
+        <Box className="logout-btn" onClick={handleLogout}>
+          <FaSignOutAlt style={{ marginRight: '8px' }} />
+          Sair
+        </Box>
+      </Box>
+    </Drawer>
   );
 };
 
