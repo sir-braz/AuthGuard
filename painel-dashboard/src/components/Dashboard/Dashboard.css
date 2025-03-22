@@ -1,38 +1,67 @@
 .dashboard-container {
   padding: 20px;
-  background-color: #f8f9fa;
-}
-
-.custom-card {
-  border: none;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 
 .card-header .icon {
-  font-size: 1.5rem;
-  margin-right: 10px;
-  color: #4caf50;
+  font-size: 24px;
+  color: #1976d2;
+}
+
+.custom-card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.custom-card .MuiCardContent-root {
+  padding: 16px;
 }
 
 .card-title {
-  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
 }
 
-.mt-4 {
-  margin-top: 1.5rem;
+button {
+  font-size: 1rem;
+  padding: 10px 20px;
 }
 
-.table-responsive {
-  overflow-x: auto;
+.MuiGrid-item {
+  padding: 0 15px;
 }
 
-.table th, .table td {
-  vertical-align: middle;
+.MuiTypography-h6 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.MuiTableCell-root {
+  font-weight: 500;
+}
+
+.MuiTable-head {
+  background-color: #f5f5f5;
+}
+
+.MuiTableRow-root:nth-of-type(even) {
+  background-color: #fafafa;
+}
+
+.MuiTableRow-root:hover {
+  background-color: #f1f1f1;
+}
+
+.MuiTableContainer-root {
+  margin-top: 20px;
+}
+
+.MuiTableCell-root, .MuiTableBody-root, .MuiTableHead-root {
+  border-bottom: 1px solid #ddd;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, Button, Table } from 'react-bootstrap';
+import { Box, Grid, Card, CardContent, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Line } from 'react-chartjs-2';
 import { FaDollarSign, FaBoxOpen, FaBreadSlice, FaFileAlt, FaUsers } from 'react-icons/fa';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
@@ -53,115 +53,121 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard-container">
-      <Row className="g-4">
+    <Box className="dashboard-container" sx={{ padding: 3 }}>
+      <Grid container spacing={4}>
         {/* Card de Indicadores de Vendas */}
-        <Col md={4}>
-          <Card className="custom-card">
-            <Card.Body>
-              <div className="card-header">
-                <FaDollarSign className="icon" />
-                <Card.Title>Indicadores de Vendas</Card.Title>
-              </div>
+        <Grid item xs={12} sm={6} md={4}>
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center">
+                <FaDollarSign size={30} style={{ marginRight: 10 }} />
+                <Typography variant="h6">Indicadores de Vendas</Typography>
+              </Box>
               <Line data={data} options={options} />
-            </Card.Body>
+            </CardContent>
           </Card>
-        </Col>
+        </Grid>
 
         {/* Card de Controle de Estoque */}
-        <Col md={4}>
-          <Card className="custom-card">
-            <Card.Body>
-              <div className="card-header">
-                <FaBoxOpen className="icon" />
-                <Card.Title>Controle de Estoque</Card.Title>
-              </div>
+        <Grid item xs={12} sm={6} md={4}>
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center">
+                <FaBoxOpen size={30} style={{ marginRight: 10 }} />
+                <Typography variant="h6">Controle de Estoque</Typography>
+              </Box>
               <Line data={data} options={options} />
-            </Card.Body>
+            </CardContent>
           </Card>
-        </Col>
+        </Grid>
 
         {/* Card de Desperdício de Pão */}
-        <Col md={4}>
-          <Card className="custom-card">
-            <Card.Body>
-              <div className="card-header">
-                <FaBreadSlice className="icon" />
-                <Card.Title>Desperdício de Pão</Card.Title>
-              </div>
+        <Grid item xs={12} sm={6} md={4}>
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center">
+                <FaBreadSlice size={30} style={{ marginRight: 10 }} />
+                <Typography variant="h6">Desperdício de Pão</Typography>
+              </Box>
               <Line data={data} options={options} />
-            </Card.Body>
+            </CardContent>
           </Card>
-        </Col>
+        </Grid>
 
         {/* Card de Gestão de Notas */}
-        <Col md={4}>
-          <Card className="custom-card">
-            <Card.Body>
-              <div className="card-header">
-                <FaFileAlt className="icon" />
-                <Card.Title>Gestão de Notas</Card.Title>
-              </div>
-              <Button variant="primary">Ver Notas</Button>
-            </Card.Body>
+        <Grid item xs={12} sm={6} md={4}>
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center">
+                <FaFileAlt size={30} style={{ marginRight: 10 }} />
+                <Typography variant="h6">Gestão de Notas</Typography>
+              </Box>
+              <Button variant="contained" color="primary" sx={{ marginTop: 2 }}>
+                Ver Notas
+              </Button>
+            </CardContent>
           </Card>
-        </Col>
+        </Grid>
 
         {/* Card de Gestão de Pessoal */}
-        <Col md={4}>
-          <Card className="custom-card">
-            <Card.Body>
-              <div className="card-header">
-                <FaUsers className="icon" />
-                <Card.Title>Gestão de Pessoal</Card.Title>
-              </div>
-              <Button variant="primary">Ver Detalhes</Button>
-            </Card.Body>
+        <Grid item xs={12} sm={6} md={4}>
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center">
+                <FaUsers size={30} style={{ marginRight: 10 }} />
+                <Typography variant="h6">Gestão de Pessoal</Typography>
+              </Box>
+              <Button variant="contained" color="primary" sx={{ marginTop: 2 }}>
+                Ver Detalhes
+              </Button>
+            </CardContent>
           </Card>
-        </Col>
-      </Row>
+        </Grid>
+      </Grid>
 
       {/* Tabela de Resumo */}
-      <Row className="mt-4">
-        <Col>
-          <Card className="custom-card">
-            <Card.Body>
-              <Card.Title>Resumo</Card.Title>
-              <Table striped bordered hover responsive>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Categoria</th>
-                    <th>Valor</th>
-                    <th>Data</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Vendas</td>
-                    <td>$500</td>
-                    <td>22/03/2025</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Estoque</td>
-                    <td>300 unidades</td>
-                    <td>22/03/2025</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Desperdício</td>
-                    <td>20 unidades</td>
-                    <td>22/03/2025</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Card.Body>
+      <Grid container spacing={4} sx={{ marginTop: 4 }}>
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Resumo</Typography>
+              <TableContainer sx={{ marginTop: 2 }}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>#</TableCell>
+                      <TableCell>Categoria</TableCell>
+                      <TableCell>Valor</TableCell>
+                      <TableCell>Data</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>1</TableCell>
+                      <TableCell>Vendas</TableCell>
+                      <TableCell>$500</TableCell>
+                      <TableCell>22/03/2025</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>2</TableCell>
+                      <TableCell>Estoque</TableCell>
+                      <TableCell>300 unidades</TableCell>
+                      <TableCell>22/03/2025</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>3</TableCell>
+                      <TableCell>Desperdício</TableCell>
+                      <TableCell>20 unidades</TableCell>
+                      <TableCell>22/03/2025</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </CardContent>
           </Card>
-        </Col>
-      </Row>
-    </div>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 
