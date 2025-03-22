@@ -7,26 +7,56 @@ import './NewNavbar.css';
 const NewNavbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [logoutError, setLogoutError] = useState(null);
   const navigate = useNavigate();
 
-  // Função para realizar logout
-  const handleLogout = () => {
-    setShowLogoutModal(true);
+  // Função de logout
+  const handleLogout = async () => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.error("Token não encontrado!");
+      setLogoutError("Token não encontrado!");
+      return;
+    }
+
+    console.log("Tentando enviar requisição de logout com o token:", token);
+
+    try {
+      // Envia a requisição de logout para o backend
+      const response = await fetch('http://www.paofacil.xyz/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      // Verifica se a resposta foi bem-sucedida
+      if (response.ok) {
+        console.log('Logout realizado com sucesso!');
+      } else if (response.status === 403) {
+        console.error('Erro ao realizar logout no backend: Forbidden');
+        setLogoutError('Erro ao realizar logout: Acesso proibido. Por favor, verifique suas credenciais.');
+      } else {
+        const errorResponse = await response.json();
+        console.error('Erro ao realizar logout no backend:', errorResponse);
+        setLogoutError(`Erro ao realizar logout no backend: ${errorResponse.message || response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Erro ao realizar logout:', error);
+      setLogoutError(`Erro ao realizar logout: ${error.message}`);
+    } finally {
+      // Remove o token do localStorage mesmo que a requisição de logout falhe
+      localStorage.removeItem('token');
+      setShowLogoutModal(false);  // Fecha o modal de logout
+      navigate('/login', { replace: true });  // Redireciona para a página de login
+      window.location.reload();  // Recarrega a página para garantir que o estado seja atualizado
+    }
   };
 
-  // Confirmar logout, remover o token, recarregar a página e redirecionar para a página de login
-  const confirmLogout = () => {
-    // Remove o token do localStorage
-    localStorage.removeItem('token');  
-
-    // Fecha o modal de logout
-    setShowLogoutModal(false);
-
-    // Recarrega a página para garantir que o estado seja atualizado e o redirecionamento ocorra
-    window.location.reload();
-
-    // Redireciona automaticamente para a página de login após o recarregamento
-    navigate('/login', { replace: true });
+  const handleToggle = () => {
+    setIsNavOpen(!isNavOpen);
   };
 
   const handleNavLinkClick = () => {
@@ -39,7 +69,7 @@ const NewNavbar = () => {
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top" expanded={isNavOpen}>
       <Container fluid>
         <Navbar.Brand as={Link} to="/home">Dashboard</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setIsNavOpen(!isNavOpen)} />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={handleToggle} />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link as={Link} to="/home" onClick={handleNavLinkClick}>
@@ -59,7 +89,7 @@ const NewNavbar = () => {
             </Nav.Link>
 
             <Nav.Item>
-              <Button variant="outline-danger" className="ms-3 logout-btn" onClick={handleLogout}>
+              <Button variant="outline-danger" className="ms-3 logout-btn" onClick={() => setShowLogoutModal(true)}>
                 <FaSignOutAlt className="me-2" /> Logout
               </Button>
             </Nav.Item>
@@ -74,12 +104,13 @@ const NewNavbar = () => {
         </Modal.Header>
         <Modal.Body>
           <p>Você tem certeza de que deseja fazer logout?</p>
+          {logoutError && <p className="text-danger">{logoutError}</p>}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowLogoutModal(false)}>
             Cancelar
           </Button>
-          <Button variant="primary" onClick={confirmLogout}>
+          <Button variant="primary" onClick={handleLogout}>
             Confirmar Logout
           </Button>
         </Modal.Footer>
