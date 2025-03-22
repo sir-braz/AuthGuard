@@ -8,6 +8,7 @@ const NewNavbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [logoutError, setLogoutError] = useState(null);
+  const [isLoggingOut, setIsLoggingOut] = useState(false); // Estado para feedback visual
   const navigate = useNavigate();
 
   // Função de logout
@@ -20,11 +21,12 @@ const NewNavbar = () => {
       return;
     }
 
-    console.log("Tentando enviar requisição de logout com o token:", token);
+    setIsLoggingOut(true); // Ativa o feedback visual
+    setLogoutError(null); // Limpa erros anteriores
 
     try {
       // Envia a requisição de logout para o backend
-      const response = await fetch('http://www.paofacil.xyz/api/auth/logout', {
+      const response = await fetch('https://api.paofacil.xyz/api/auth/logout', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -49,9 +51,10 @@ const NewNavbar = () => {
     } finally {
       // Remove o token do localStorage mesmo que a requisição de logout falhe
       localStorage.removeItem('token');
-      setShowLogoutModal(false);  // Fecha o modal de logout
-      navigate('/login', { replace: true });  // Redireciona para a página de login
-      window.location.reload();  // Recarrega a página para garantir que o estado seja atualizado
+      setIsLoggingOut(false); // Desativa o feedback visual
+      setShowLogoutModal(false); // Fecha o modal de logout
+      navigate('/login', { replace: true }); // Redireciona para a página de login
+      window.location.reload(); // Recarrega a página para garantir que o estado seja atualizado
     }
   };
 
@@ -110,8 +113,15 @@ const NewNavbar = () => {
           <Button variant="secondary" onClick={() => setShowLogoutModal(false)}>
             Cancelar
           </Button>
-          <Button variant="primary" onClick={handleLogout}>
-            Confirmar Logout
+          <Button variant="primary" onClick={handleLogout} disabled={isLoggingOut}>
+            {isLoggingOut ? (
+              <>
+                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>{' '}
+                Saindo...
+              </>
+            ) : (
+              'Confirmar Logout'
+            )}
           </Button>
         </Modal.Footer>
       </Modal>

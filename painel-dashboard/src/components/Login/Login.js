@@ -9,13 +9,26 @@ const Login = ({ setIsAuthenticated }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const validateFields = () => {
+    if (!username || !password) {
+      setError('Por favor, preencha todos os campos.');
+      return false;
+    }
+    return true;
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
+    setLoading(true);
+
+    if (!validateFields()) {
+      setLoading(false);
+      return;
+    }
 
     try {
-      const response = await fetch('http://www.paofacil.xyz/api/auth/login', {
+      const response = await fetch('https://api.paofacil.xyz/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -89,7 +102,7 @@ const Login = ({ setIsAuthenticated }) => {
 
         <div className="text-center mt-3">
           <span>Ainda não tem uma conta?</span>{' '}
-          <Link to="/register">Registre-se aqui</Link>
+          <Link to="/register" className="btn-link">Registre-se aqui</Link>
         </div>
       </div>
     </div>
