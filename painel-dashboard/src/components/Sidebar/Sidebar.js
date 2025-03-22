@@ -15,49 +15,45 @@ const defaultMenuItems = [
 ];
 
 const Sidebar = ({ menuItems = defaultMenuItems, logoText = "Sir Braz" }) => {
-  const [isOpen, setIsOpen] = React.useState(true);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-  };
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Verifica se é mobile
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <IconButton
-        onClick={handleToggle}
-        sx={{
-          position: 'absolute',
-          top: 16,
-          left: isOpen ? (isMobile ? '200px' : '240px') : '16px',
-          zIndex: 1201,
-          color: theme.palette.primary.contrastText,
-          transition: 'left 0.3s ease',
-        }}
-        aria-label={isOpen ? 'Close Sidebar' : 'Open Sidebar'}
-      >
-        {isOpen ? <FaArrowRight /> : <FaArrowRight />}
-      </IconButton>
+      {/* Botão de alternância para abrir/fechar a sidebar em telas pequenas */}
+      {isMobile && (
+        <IconButton
+          sx={{
+            position: 'absolute',
+            top: 16,
+            left: '16px',
+            zIndex: 1201,
+            color: theme.palette.primary.contrastText,
+          }}
+          aria-label="Abrir Sidebar"
+        >
+          <FaArrowRight />
+        </IconButton>
+      )}
 
+      {/* Drawer (Sidebar) */}
       <Drawer
         sx={{
-          width: isOpen ? (isMobile ? 200 : 240) : 60,
+          width: isMobile ? 200 : 240,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: isOpen ? (isMobile ? 200 : 240) : 60,
+            width: isMobile ? 200 : 240,
             backgroundColor: theme.palette.background.default,
             boxSizing: 'border-box',
             borderRight: '1px solid rgba(0, 0, 0, 0.12)',
-            paddingTop: '64px',
+            paddingTop: '64px', // Para compensar o Header
             transition: 'width 0.3s ease',
             color: theme.palette.text.primary,
           },
         }}
-        variant="temporary"
+        variant={isMobile ? "temporary" : "permanent"} // 'temporary' para dispositivos móveis, 'permanent' para desktop
         anchor="left"
-        open={isOpen}
-        onClose={handleToggle}
+        open={!isMobile} // No mobile, o Drawer será fechado por padrão
         ModalProps={{
           keepMounted: true, // Melhor performance em dispositivos móveis
         }}
@@ -65,7 +61,7 @@ const Sidebar = ({ menuItems = defaultMenuItems, logoText = "Sir Braz" }) => {
         <Box sx={{ padding: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <FaBreadSlice className="sidebar-logo" style={{ color: '#d4a373', fontSize: '36px' }} />
-            {isOpen && (
+            {!isMobile && (
               <Box sx={{ marginLeft: 1, fontSize: '18px', fontWeight: '600', color: theme.palette.text.primary }}>
                 {logoText}
               </Box>
@@ -75,11 +71,11 @@ const Sidebar = ({ menuItems = defaultMenuItems, logoText = "Sir Braz" }) => {
 
           <List>
             {menuItems.map((item, index) => (
-              <ListItem button key={index} component={Link} to={item.link} sx={{ paddingY: 1 }}>
+              <ListItem key={index} component={Link} to={item.link} sx={{ paddingY: 1 }}>
                 <ListItemIcon sx={{ color: theme.palette.text.primary }}>
                   {item.icon}
                 </ListItemIcon>
-                {isOpen && <ListItemText primary={item.text} sx={{ color: theme.palette.text.primary }} />}
+                {!isMobile && <ListItemText primary={item.text} sx={{ color: theme.palette.text.primary }} />}
               </ListItem>
             ))}
           </List>
