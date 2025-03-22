@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, Box, Typography } from '@mui/material';
-import { FaHome, FaChartBar, FaBox, FaBreadSlice, FaUser, FaSignOutAlt, FaRegUserCircle, FaShoppingCart } from 'react-icons/fa';
-import './Sidebar.css';
+import { FaHome, FaChartBar, FaBox, FaUser, FaSignOutAlt, FaRegUserCircle, FaShoppingCart, FaBreadSlice } from 'react-icons/fa';
+import './Sidebar.css'; // Aplique a estilização específica
 
 const defaultMenuItems = [
   { text: 'Dashboard', icon: <FaHome />, link: '/home' },
@@ -16,93 +16,103 @@ const Sidebar = ({ menuItems = defaultMenuItems, logoText = "PaoFacil" }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Remove o token do localStorage
     localStorage.removeItem('authToken');
-  
-    // Atualiza a página (força um reload) e redireciona para a página de login
     window.location.reload();
     navigate('/login');
   };
+
   return (
     <Drawer
       variant="permanent"
       anchor="left"
-      classes={{ paper: 'sidebar' }} // Aplica a classe CSS fixa para a sidebar escura
+      sx={{
+        width: 240,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
+          width: 240,
+          backgroundColor: '#2c3e50',
+          color: '#fff',
+          borderRight: 'none',
+        },
+      }}
     >
-      <Box>
+      <Box sx={{ padding: '20px', textAlign: 'center' }}>
         {/* Logo */}
-        <Box className="logo-box">
-          <FaBreadSlice style={{ color: '#d4a373', fontSize: '36px' }} />
-          <Box className="logo-text">
-            {logoText}
-          </Box>
+        <Box>
+          <FaBreadSlice style={{ color: '#f39c12', fontSize: '36px' }} />
         </Box>
-
-        {/* Slogan */}
-        <Box className="slogan">
+        <Typography variant="h6" sx={{ color: '#f39c12', fontWeight: 'bold' }}>
+          {logoText}
+        </Typography>
+        <Typography variant="body2" sx={{ color: '#bdc3c7', marginBottom: '20px' }}>
           "Reduzindo o desperdício, aproveitando o melhor do pão!"
-        </Box>
-
-        <Divider sx={{ marginY: 2, backgroundColor: '#ffffff33' }} />
-
-        {/* Informações do Usuário */}
-        <Box sx={{ padding: '16px 0', display: 'flex', alignItems: 'center' }}>
-          <FaRegUserCircle style={{ fontSize: '36px', color: '#fbc02d' }} />
-          <Box sx={{ marginLeft: '12px', color: '#ffffff' }}>
-            <Typography variant="body2">Bem-vindo, João!</Typography>
-            <Typography variant="caption">Administrador</Typography>
-          </Box>
-        </Box>
-
-        <Divider sx={{ marginY: 2, backgroundColor: '#ffffff33' }} />
+        </Typography>
+        <Divider sx={{ backgroundColor: '#34495e', marginBottom: '20px' }} />
 
         {/* Menu */}
         <List>
           {menuItems.map((item, index) => (
-            <ListItem 
-              key={index} 
-              component={Link} 
-              to={item.link} 
-              sx={{ paddingY: 1, color: '#ffffff' }} // Garantir que o texto seja branco
+            <ListItem
+              key={index}
+              component={Link}
+              to={item.link}
+              sx={{
+                paddingY: '12px',
+                borderRadius: '8px',
+                '&:hover': {
+                  backgroundColor: '#f39c12',
+                  color: '#fff',
+                },
+              }}
             >
-              <ListItemIcon sx={{ color: '#ffffff' }}> {/* Ícones brancos */}
+              <ListItemIcon sx={{ color: '#fff' }}>
                 {item.icon}
               </ListItemIcon>
-              <ListItemText 
-                primary={item.text} 
-                sx={{ color: '#ffffff' }} // Garantir que o texto seja branco
+              <ListItemText
+                primary={item.text}
+                sx={{ color: '#fff', fontWeight: '500' }}
               />
             </ListItem>
           ))}
         </List>
 
-        <Divider sx={{ marginY: 2, backgroundColor: '#ffffff33' }} />
+        <Divider sx={{ backgroundColor: '#34495e', marginY: '20px' }} />
 
-        {/* Categorias */}
-        <Box className="category-divider">
-          <Typography variant="body2" sx={{ color: '#ffffff' }}>Gestão de Pedidos</Typography>
-          <List>
-            <ListItem component={Link} to="/pedidos" sx={{ paddingY: 1 }}>
-              <ListItemIcon sx={{ color: '#ffffff' }}>
-                <FaShoppingCart />
-              </ListItemIcon>
-              <ListItemText primary="Pedidos" sx={{ color: '#ffffff' }} />
-            </ListItem>
-          </List>
+        {/* Informações do Usuário */}
+        <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+          <FaRegUserCircle style={{ color: '#f39c12', fontSize: '36px' }} />
+          <Box sx={{ marginLeft: '12px' }}>
+            <Typography variant="body2" sx={{ color: '#fff' }}>
+              Bem-vindo, João!
+            </Typography>
+            <Typography variant="caption" sx={{ color: '#bdc3c7' }}>
+              Administrador
+            </Typography>
+          </Box>
         </Box>
 
-        {/* Botão de Ação Rápida */}
-        <Box className="action-btn" onClick={() => navigate('/pedido/novo')}>
-          <FaShoppingCart style={{ marginRight: '8px' }} />
-          Fazer Pedido
-        </Box>
-      </Box>
-
-      {/* Botão de Logout */}
-      <Box sx={{ paddingBottom: '16px' }}>
-        <Box className="logout-btn" onClick={handleLogout}>
-          <FaSignOutAlt style={{ marginRight: '8px' }} />
-          Sair
+        {/* Botão de Logout */}
+        <Box sx={{ marginTop: 'auto' }}>
+          <ListItem
+            button
+            onClick={handleLogout}
+            sx={{
+              paddingY: '12px',
+              borderRadius: '8px',
+              '&:hover': {
+                backgroundColor: '#e74c3c',
+                color: '#fff',
+              },
+            }}
+          >
+            <ListItemIcon sx={{ color: '#fff' }}>
+              <FaSignOutAlt />
+            </ListItemIcon>
+            <ListItemText
+              primary="Sair"
+              sx={{ color: '#fff', fontWeight: '500' }}
+            />
+          </ListItem>
         </Box>
       </Box>
     </Drawer>
