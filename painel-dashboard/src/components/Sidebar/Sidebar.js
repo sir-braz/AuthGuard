@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, IconButton, Divider, Box, useMediaQuery } from '@mui/material';
-import { FaHome, FaChartBar, FaBox, FaUsers, FaArrowLeft, FaArrowRight, FaBreadSlice, FaUser } from 'react-icons/fa';
+import { FaHome, FaChartBar, FaBox, FaUsers, FaArrowRight, FaBreadSlice, FaUser } from 'react-icons/fa';
 import { useTheme } from '@mui/material/styles';
 import './Sidebar.css';
 
@@ -15,45 +15,49 @@ const defaultMenuItems = [
 ];
 
 const Sidebar = ({ menuItems = defaultMenuItems, logoText = "Sir Braz" }) => {
+  const [isOpen, setIsOpen] = React.useState(true);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Verifica se é mobile
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
-      {/* Botão de alternância para abrir/fechar a sidebar em telas pequenas */}
-      {isMobile && (
-        <IconButton
-          sx={{
-            position: 'absolute',
-            top: 16,
-            left: '16px',
-            zIndex: 1201,
-            color: theme.palette.primary.contrastText,
-          }}
-          aria-label="Abrir Sidebar"
-        >
-          <FaArrowRight />
-        </IconButton>
-      )}
+      <IconButton
+        onClick={handleToggle}
+        sx={{
+          position: 'absolute',
+          top: 16,
+          left: isOpen ? (isMobile ? '200px' : '240px') : '16px',
+          zIndex: 1201,
+          color: theme.palette.primary.contrastText,
+          transition: 'left 0.3s ease',
+        }}
+        aria-label={isOpen ? 'Close Sidebar' : 'Open Sidebar'}
+      >
+        {isOpen ? <FaArrowRight /> : <FaArrowRight />}
+      </IconButton>
 
-      {/* Drawer (Sidebar) */}
       <Drawer
         sx={{
-          width: isMobile ? 200 : 240,
+          width: isOpen ? (isMobile ? 200 : 240) : 60,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: isMobile ? 200 : 240,
+            width: isOpen ? (isMobile ? 200 : 240) : 60,
             backgroundColor: theme.palette.background.default,
             boxSizing: 'border-box',
             borderRight: '1px solid rgba(0, 0, 0, 0.12)',
-            paddingTop: '64px', // Para compensar o Header
+            paddingTop: '64px',
             transition: 'width 0.3s ease',
             color: theme.palette.text.primary,
           },
         }}
-        variant={isMobile ? "temporary" : "permanent"} // 'temporary' para dispositivos móveis, 'permanent' para desktop
+        variant="temporary"
         anchor="left"
-        open={!isMobile} // No mobile, o Drawer será fechado por padrão
+        open={isOpen}
+        onClose={handleToggle}
         ModalProps={{
           keepMounted: true, // Melhor performance em dispositivos móveis
         }}
@@ -61,7 +65,7 @@ const Sidebar = ({ menuItems = defaultMenuItems, logoText = "Sir Braz" }) => {
         <Box sx={{ padding: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <FaBreadSlice className="sidebar-logo" style={{ color: '#d4a373', fontSize: '36px' }} />
-            {!isMobile && (
+            {isOpen && (
               <Box sx={{ marginLeft: 1, fontSize: '18px', fontWeight: '600', color: theme.palette.text.primary }}>
                 {logoText}
               </Box>
@@ -75,7 +79,7 @@ const Sidebar = ({ menuItems = defaultMenuItems, logoText = "Sir Braz" }) => {
                 <ListItemIcon sx={{ color: theme.palette.text.primary }}>
                   {item.icon}
                 </ListItemIcon>
-                {!isMobile && <ListItemText primary={item.text} sx={{ color: theme.palette.text.primary }} />}
+                {isOpen && <ListItemText primary={item.text} sx={{ color: theme.palette.text.primary }} />}
               </ListItem>
             ))}
           </List>
