@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; 
 import NewNavbar from './components/Navbar/NewNavbar'; 
+import Sidebar from './components/Sidebar/Sidebar'; // Importar Sidebar
 import Dashboard from './components/Dashboard/Dahboard'; 
 import Vendas from './components/Sales/Sales'; 
 import Estoque from './components/Stock/Stock'; 
@@ -38,68 +39,70 @@ const App = () => {
     <Router>
       <div className="App">
         {isAuthenticated && <NewNavbar onLogout={handleLogout} />}
+        {isAuthenticated && <Sidebar />} {/* Adicionar Sidebar */}
+        <div className={`content ${isAuthenticated ? 'with-sidebar' : ''}`}>
+          <Routes>
+            {/* Redirecionamento automático: "/" vai para "/home" se autenticado, senão "/login" */}
+            <Route 
+              path="/" 
+              element={<Navigate to={isAuthenticated ? "/home" : "/login"} />} 
+            />
 
-        <Routes>
-          {/* Redirecionamento automático: "/" vai para "/home" se autenticado, senão "/login" */}
-          <Route 
-            path="/" 
-            element={<Navigate to={isAuthenticated ? "/home" : "/login"} />} 
-          />
+            {/* Página de Login */}
+            <Route 
+              path="/login" 
+              element={isAuthenticated ? <Navigate to="/home" /> : <Login setIsAuthenticated={handleLogin} />} 
+            />
 
-          {/* Página de Login */}
-          <Route 
-            path="/login" 
-            element={isAuthenticated ? <Navigate to="/home" /> : <Login setIsAuthenticated={handleLogin} />} 
-          />
+            {/* Página de Registro */}
+            <Route 
+              path="/register" 
+              element={isAuthenticated ? <Navigate to="/home" /> : <Register />}  
+            />
 
-          {/* Página de Registro */}
-          <Route 
-            path="/register" 
-            element={isAuthenticated ? <Navigate to="/home" /> : <Register />}  
-          />
-
-          {/* Rotas Protegidas */}
-          <Route 
-            path="/home" 
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/vendas" 
-            element={
-              <ProtectedRoute>
-                <Vendas />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/estoque" 
-            element={
-              <ProtectedRoute>
-                <Estoque />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/ponto" 
-            element={
-              <ProtectedRoute>
-                <Ponto />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/indicators" 
-            element={
-              <ProtectedRoute>
-                <Indicadores />
-              </ProtectedRoute>
-            } 
-          />
-        </Routes>
+            {/* Rotas Protegidas */}
+            <Route 
+              path="/home" 
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/vendas" 
+              element={
+                <ProtectedRoute>
+                  <Vendas />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/estoque" 
+              element={
+                <ProtectedRoute>
+                  <Estoque />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/ponto" 
+              element={
+                <ProtectedRoute>
+                  <Ponto />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/indicators" 
+              element={
+                <ProtectedRoute>
+                  <Indicadores />
+                </ProtectedRoute>
+              } 
+            />
+          </Routes>
+        </div>
       </div>
     </Router>
   );
