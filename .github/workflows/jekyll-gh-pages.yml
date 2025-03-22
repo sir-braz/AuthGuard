@@ -1,49 +1,45 @@
-name: Deploy React to GitHub Pages
+name: Deploy React to Surge
 
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout o código
       - name: Checkout the code
         uses: actions/checkout@v4
 
+      # 2. Configurar o Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      # 3. Instalar dependências
       - name: Install dependencies
         run: |
           cd painel-dashboard
           npm install
-          npm install gh-pages
 
+      # 4. Build do projeto
       - name: Build the project
         run: |
           cd painel-dashboard
           npm run build
 
-      - name: Set up Git configuration
-        run: |
-          git config --global user.name "sir-braz"
-          git config --global user.email "dev.vinicius-batista@hotmail.com"
+      # 5. Instalar o Surge
+      - name: Install Surge
+        run: npm install --global surge
 
-      - name: Deploy to GitHub Pages
+      # 6. Deploy para o Surge
+      - name: Deploy to Surge
         env:
-          CI: false
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Usando o secret GH_TOKEN
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}  # Usando o secret SURGE_TOKEN
         run: |
-          cd painel-dashboard
-          # Garantir que o token é utilizado na URL do repositório
-          git remote set-url origin https://$GITHUB_TOKEN@github.com/${{ github.repository }}.git
-          # Executar o comando de deploy
-          npm run deploy
+          cd painel-dashboard/build
+          surge . pao-facil.surge.sh --token $SURGE_TOKEN
