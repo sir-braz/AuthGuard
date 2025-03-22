@@ -13,25 +13,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      - name: Checkout the code
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: |
           cd painel-dashboard
           npm install
+          npm install gh-pages # Ensure gh-pages is installed
 
-      - name: Build do projeto
+      - name: Build the project
         run: |
           cd painel-dashboard
           npm run build
 
-      - name: Deploy para o GitHub Pages
+      - name: Set up Git configuration
+        run: |
+          git config --global user.name "sir-braz"
+          git config --global user.email "dev.vinicius-batista@hotmail.com"
+
+      - name: Deploy to GitHub Pages
         env:
           CI: false
         run: |
