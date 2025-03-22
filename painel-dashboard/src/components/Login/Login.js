@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { TextField, Button, CircularProgress, Alert, Box, Typography } from '@mui/material';
-import { styled } from '@mui/system';
 
 const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
@@ -109,7 +108,7 @@ const Login = ({ setIsAuthenticated }) => {
   );
 };
 
-// Estilos usando Material-UI
+// Estilos utilizando Material-UI
 const styles = {
   container: {
     display: 'flex',
