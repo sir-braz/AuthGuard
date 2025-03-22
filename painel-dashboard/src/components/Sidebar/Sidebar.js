@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, Box, Typography } from '@mui/material';
-import { FaHome, FaChartBar, FaBox, FaUser, FaSignOutAlt, FaRegUserCircle, FaShoppingCart, FaBreadSlice } from 'react-icons/fa';
+import { FaHome, FaChartBar, FaBox, FaUser, FaSignOutAlt, FaRegUserCircle, FaBreadSlice } from 'react-icons/fa';
 import './Sidebar.css'; // Aplique a estilização específica
 
 const defaultMenuItems = [
