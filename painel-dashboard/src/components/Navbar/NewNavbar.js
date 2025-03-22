@@ -7,43 +7,31 @@ import './NewNavbar.css';
 const NewNavbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [userData, setUserData] = useState(null); // Para armazenar os dados do usuário
   const navigate = useNavigate();
 
-  // Verifica se o token existe no localStorage
-  const token = localStorage.getItem('token');
-
-  // Função para obter dados do usuário (simulação)
-  const fetchUserData = () => {
-    if (token) {
-      // Simulação: Suponha que você faça uma requisição para uma API para obter os dados do usuário
-      // Aqui estamos apenas retornando dados fictícios como exemplo
-      setUserData({
-        username: 'john_doe',
-        email: 'john@example.com',
-        role: 'admin',
-      });
-    }
-  };
-
-  const handleToggle = () => {
-    setIsNavOpen(!isNavOpen);
-  };
-
+  // Função para realizar logout
   const handleLogout = () => {
-    fetchUserData(); // Exibe os dados antes de fazer o logout
-    setShowLogoutModal(true); // Exibe a modal de confirmação
+    setShowLogoutModal(true);
   };
 
+  // Confirmar logout, remover o token, recarregar a página e redirecionar para a página de login
   const confirmLogout = () => {
-    localStorage.removeItem('token');
-    setShowLogoutModal(false); // Fecha a modal
-    navigate('/'); // Redireciona para o login
+    // Remove o token do localStorage
+    localStorage.removeItem('token');  
+
+    // Fecha o modal de logout
+    setShowLogoutModal(false);
+
+    // Recarrega a página para garantir que o estado seja atualizado e o redirecionamento ocorra
+    window.location.reload();
+
+    // Redireciona automaticamente para a página de login após o recarregamento
+    navigate('/login', { replace: true });
   };
 
   const handleNavLinkClick = () => {
     if (window.innerWidth <= 768) {
-      setIsNavOpen(false); // Fecha a Navbar apenas em dispositivos móveis
+      setIsNavOpen(false);
     }
   };
 
@@ -51,25 +39,21 @@ const NewNavbar = () => {
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top" expanded={isNavOpen}>
       <Container fluid>
         <Navbar.Brand as={Link} to="/home">Dashboard</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={handleToggle} />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setIsNavOpen(!isNavOpen)} />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link as={Link} to="/home" onClick={handleNavLinkClick}>
               <FaHome className="me-2" /> Home
             </Nav.Link>
-
             <Nav.Link as={Link} to="/vendas" onClick={handleNavLinkClick}>
               <FaChartBar className="me-2" /> Vendas
             </Nav.Link>
-
             <Nav.Link as={Link} to="/estoque" onClick={handleNavLinkClick}>
               <FaBox className="me-2" /> Estoque
             </Nav.Link>
-
             <Nav.Link as={Link} to="/ponto" onClick={handleNavLinkClick}>
               <FaUsers className="me-2" /> Folha de Ponto
             </Nav.Link>
-
             <Nav.Link as={Link} to="/indicators" onClick={handleNavLinkClick}>
               <FaChartBar className="me-2" /> Indicadores
             </Nav.Link>
@@ -89,16 +73,6 @@ const NewNavbar = () => {
           <Modal.Title>Confirmar Logout</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h5>Dados do Usuário:</h5>
-          {userData ? (
-            <ul>
-              <li><strong>Nome:</strong> {userData.username}</li>
-              <li><strong>Email:</strong> {userData.email}</li>
-              <li><strong>Função:</strong> {userData.role}</li>
-            </ul>
-          ) : (
-            <p>Carregando dados...</p>
-          )}
           <p>Você tem certeza de que deseja fazer logout?</p>
         </Modal.Body>
         <Modal.Footer>
