@@ -1,7 +1,7 @@
 import React from 'react';
-import { Row, Col, Card, Button } from 'react-bootstrap';
+import { Row, Col, Card, Button, Table } from 'react-bootstrap';
 import { Line } from 'react-chartjs-2';
-import { FaDollarSign, FaBoxOpen, FaBreadSlice, FaFileAlt } from 'react-icons/fa';
+import { FaDollarSign, FaBoxOpen, FaBreadSlice, FaFileAlt, FaUsers } from 'react-icons/fa';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import './Dashboard.css';
 
@@ -103,6 +103,60 @@ const Dashboard = () => {
                 <Card.Title>Gestão de Notas</Card.Title>
               </div>
               <Button variant="primary">Ver Notas</Button>
+            </Card.Body>
+          </Card>
+        </Col>
+
+        {/* Card de Gestão de Pessoal */}
+        <Col md={4}>
+          <Card className="custom-card">
+            <Card.Body>
+              <div className="card-header">
+                <FaUsers className="icon" />
+                <Card.Title>Gestão de Pessoal</Card.Title>
+              </div>
+              <Button variant="primary">Ver Detalhes</Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+
+      {/* Tabela de Resumo */}
+      <Row className="mt-4">
+        <Col>
+          <Card className="custom-card">
+            <Card.Body>
+              <Card.Title>Resumo</Card.Title>
+              <Table striped bordered hover responsive>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Categoria</th>
+                    <th>Valor</th>
+                    <th>Data</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Vendas</td>
+                    <td>$500</td>
+                    <td>22/03/2025</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Estoque</td>
+                    <td>300 unidades</td>
+                    <td>22/03/2025</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Desperdício</td>
+                    <td>20 unidades</td>
+                    <td>22/03/2025</td>
+                  </tr>
+                </tbody>
+              </Table>
             </Card.Body>
           </Card>
         </Col>

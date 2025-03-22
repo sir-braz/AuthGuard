@@ -1,120 +1,38 @@
-/* Dashboard.css */
-
-/* Container principal para o painel */
 .dashboard-container {
-    background: linear-gradient(to right, #f7f7f7, #e1e9f2); /* Gradiente suave de cinza claro a azul claro */
-    padding: 30px 15px; /* Ajuste no padding */
-    min-height: 100vh; /* Garante que ocupe toda a altura da tela */
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-  }
-  
-  /* Container de Cards */
-  .dashboard-container .row {
-    max-width: 1200px; /* Define um tamanho máximo para o painel */
-    width: 100%;
-    margin: 0 auto; /* Centraliza o conteúdo */
-  }
-  
-  /* Cartões customizados */
-  .custom-card {
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Aumenta a sombra para dar mais destaque */
-    background-color: #ffffff;  /* Fundo branco para os cartões */
-    transition: all 0.3s ease;
-    margin-bottom: 20px;
-  }
-  
-  .custom-card:hover {
-    transform: translateY(-8px); /* Efeito de elevação mais pronunciado */
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Sombra mais forte no hover */
-  }
-  
-  /* Cabeçalho do cartão (Ícone e título) */
-  .card-header {
-    display: flex;
-    align-items: center;
-    font-size: 1.3rem; /* Tamanho maior para o título */
-    margin-bottom: 15px;
-  }
-  
-  .icon {
-    font-size: 2.5rem; /* Ícones maiores */
-    margin-right: 15px;
-    color: #4caf50; /* Cor dos ícones */
-  }
-  
-  /* Títulos dos cartões */
-  .card-title {
-    font-weight: bold;
-    color: #333333;
-    flex-grow: 1;
-  }
-  
-  /* Estilo do botão */
-  button {
-    width: 100%;
-    padding: 12px 20px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    margin-top: 15px; /* Ajuste o botão para ficar mais espaçado */
-  }
-  
-  button:hover {
-    background-color: #0056b3; /* Cor mais escura no hover */
-  }
-  
-  /* Estilos específicos para o gráfico */
-  .line-chart-container {
-    margin-top: 20px;
-  }
-  
-  /* Tooltip do gráfico */
-  .chartjs-tooltip {
-    background-color: #4caf50 !important;
-    color: white !important;
-  }
-  
-  /* Responsividade para telas pequenas */
-  @media (max-width: 768px) {
-    .dashboard-container {
-      padding: 15px 10px; /* Menos padding em telas pequenas */
-    }
-  
-    .custom-card {
-      margin-bottom: 10px; /* Menos margem nos cartões */
-    }
-  
-    .card-header {
-      font-size: 1.1rem;
-    }
-  
-    .icon {
-      font-size: 2rem; /* Ícones menores em telas pequenas */
-    }
-  
-    .card-title {
-      font-size: 1.1rem;
-    }
-  
-    button {
-      padding: 10px 15px; /* Botão um pouco menor */
-    }
-  }
-  
-  /* Estilo para quando o layout é maior */
-  @media (min-width: 1200px) {
-    .dashboard-container {
-      padding: 40px; /* Mais padding em telas grandes */
-    }
-  
-    .custom-card {
-      margin-bottom: 30px; /* Maior espaço entre os cartões */
-    }
-  }
-  
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.custom-card {
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-header .icon {
+  font-size: 1.5rem;
+  margin-right: 10px;
+  color: #4caf50;
+}
+
+.card-title {
+  margin: 0;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
