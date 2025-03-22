@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col, Spinner } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 
@@ -15,89 +14,85 @@ const Login = ({ setIsAuthenticated }) => {
     setLoading(true);
     setError('');
 
-    const userData = { username, password };
-
     try {
       const response = await fetch('http://www.paofacil.xyz/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData),
+        body: JSON.stringify({ username, password }),
       });
 
-      const responseBody = await response.json();
+      const data = await response.json();
 
       if (response.ok) {
-        // Armazenando o token no localStorage
-        localStorage.setItem('token', responseBody.token);
-
+        localStorage.setItem('token', data.token);
         setIsAuthenticated(true);
-        navigate('/home'); // Redireciona para a página inicial
+        navigate('/home'); // Redireciona para a home
       } else {
-        setError(responseBody.message || 'Usuário ou senha inválidos!');
+        setError(data.message || 'Usuário ou senha inválidos!');
       }
     } catch (error) {
-      setError('Erro de rede: ' + error.message);
+      setError('Erro de conexão. Verifique sua internet.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Container className="login-container">
-      <Row className="justify-content-center">
-        <Col md={6} lg={4} className="login-col">
-          <div className="form-card">
-            <h2 className="text-center mb-4">Login</h2>
-            {error && <div className="alert alert-danger">{error}</div>}
-            
-            <Form onSubmit={handleLogin}>
-              <Form.Group controlId="formBasicUsername">
-                <Form.Label>Usuário</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Digite seu nome de usuário"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
-              </Form.Group>
+    <div className="login-container">
+      <div className="form-card">
+        <h2 className="text-center mb-4">Login</h2>
 
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Senha</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Digite sua senha"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </Form.Group>
+        {error && <div className="alert alert-danger">{error}</div>}
 
-              <Button 
-                variant="primary" 
-                type="submit" 
-                className="w-100 mt-4 btn-submit"
-                disabled={loading}
-              >
-                {loading ? (
-                  <>
-                    <Spinner animation="border" size="sm" /> Entrando...
-                  </>
-                ) : (
-                  'Login'
-                )}
-              </Button>
-            </Form>
-
-            {/* Link para a página de registro */}
-            <div className="text-center mt-3">
-              <span>Ainda não tem uma conta?</span>{' '}
-              <Link to="/register">Registre-se aqui</Link>
-            </div>
+        <form onSubmit={handleLogin}>
+          <div className="mb-3">
+            <label htmlFor="username" className="form-label">Usuário</label>
+            <input
+              type="text"
+              className="form-control"
+              id="username"
+              placeholder="Digite seu usuário"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
           </div>
-        </Col>
-      </Row>
-    </Container>
+
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">Senha</label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              placeholder="Digite sua senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <button 
+            type="submit" 
+            className="btn btn-primary w-100 mt-4 btn-submit"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
+                Entrando...
+              </>
+            ) : (
+              'Login'
+            )}
+          </button>
+        </form>
+
+        <div className="text-center mt-3">
+          <span>Ainda não tem uma conta?</span>{' '}
+          <Link to="/register">Registre-se aqui</Link>
+        </div>
+      </div>
+    </div>
   );
 };
 
