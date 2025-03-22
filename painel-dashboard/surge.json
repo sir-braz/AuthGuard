@@ -1,0 +1,13 @@
+{
+    "routes": {
+      "/register": "/index.html",
+      "/login": "/index.html",
+      "/home": "/index.html",
+      "/vendas": "/index.html",
+      "/estoque": "/index.html",
+      "/ponto": "/index.html",
+      "/indicators": "/index.html",
+      "*": "/index.html"
+    }
+  }
+  

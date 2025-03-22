@@ -1,0 +1,53 @@
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": [
+      "/images/*",
+      "/css/*",
+      "/js/*",
+      "/static/*"
+    ]
+  },
+  "routes": [
+    {
+      "route": "/",
+      "serve": "/index.html",
+      "statusCode": 200
+    },
+    {
+      "route": "/login",
+      "serve": "/index.html",
+      "statusCode": 200
+    },
+    {
+      "route": "/register",
+      "serve": "/index.html",
+      "statusCode": 200
+    },
+    {
+      "route": "/home",
+      "serve": "/index.html",
+      "statusCode": 200
+    },
+    {
+      "route": "/vendas",
+      "serve": "/index.html",
+      "statusCode": 200
+    },
+    {
+      "route": "/estoque",
+      "serve": "/index.html",
+      "statusCode": 200
+    },
+    {
+      "route": "/ponto",
+      "serve": "/index.html",
+      "statusCode": 200
+    },
+    {
+      "route": "/indicators",
+      "serve": "/index.html",
+      "statusCode": 200
+    }
+  ]
+}
