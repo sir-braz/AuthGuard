@@ -34,16 +34,16 @@ jobs:
 
       - name: Set up Git configuration
         run: |
-          git config --global user.name "sir-braz"
-          git config --global user.email "dev.vinicius-batista@hotmail.com"
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
 
       - name: Deploy to GitHub Pages
         env:
           CI: false
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Token do GitHub Actions
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Usando o secret GH_TOKEN
         run: |
           cd painel-dashboard
-          # Definir a URL remota para usar o GITHUB_TOKEN para autenticação
+          # Garantir que o token é utilizado na URL do repositório
           git remote set-url origin https://$GITHUB_TOKEN@github.com/${{ github.repository }}.git
-          # Realizar o deploy com gh-pages
+          # Executar o comando de deploy
           npm run deploy
