@@ -5,10 +5,10 @@ import Sidebar from './components/Sidebar/Sidebar';
 import Dashboard from './components/Dashboard/Dahboard'; 
 import Vendas from './components/Sales/Sales'; 
 import Estoque from './components/Stock/Stock'; 
-import Ponto from './components/Time/TimeSheet'; 
 import Indicadores from './components/Indicator/Indicators'; 
 import Login from './components/Login/Login'; 
 import Register from './components/Register/Register';  
+import Profile from './components/Profile/Profile.js'
 import './App.css'; 
 
 const App = () => {
@@ -45,8 +45,9 @@ const App = () => {
             <Route path="/home" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/vendas" element={<ProtectedRoute><Vendas /></ProtectedRoute>} />
             <Route path="/estoque" element={<ProtectedRoute><Estoque /></ProtectedRoute>} />
-            <Route path="/ponto" element={<ProtectedRoute><Ponto /></ProtectedRoute>} />
             <Route path="/indicators" element={<ProtectedRoute><Indicadores /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+
           </Routes>
         </div>
       </div>

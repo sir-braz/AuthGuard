@@ -9,7 +9,6 @@ const defaultMenuItems = [
   { text: 'Dashboard', icon: <FaHome />, link: '/home' },
   { text: 'Vendas', icon: <FaChartBar />, link: '/vendas' },
   { text: 'Estoque', icon: <FaBox />, link: '/estoque' },
-  { text: 'Ponto', icon: <FaUsers />, link: '/ponto' },
   { text: 'Indicadores', icon: <FaChartBar />, link: '/indicators' },
   { text: 'Perfil', icon: <FaUser />, link: '/profile' },
 ];
