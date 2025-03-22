@@ -18,10 +18,10 @@ const App = () => {
     setIsAuthenticated(true);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsAuthenticated(false);
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem('token');
+  //   setIsAuthenticated(false);
+  // };
 
   const ProtectedRoute = ({ children }) => {
     return isAuthenticated ? children : <Navigate to="/login" />;
