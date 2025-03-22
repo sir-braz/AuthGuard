@@ -25,7 +25,7 @@ jobs:
         run: |
           cd painel-dashboard
           npm install
-          npm install gh-pages # Ensure gh-pages is installed
+          npm install gh-pages
 
       - name: Build the project
         run: |
@@ -40,7 +40,10 @@ jobs:
       - name: Deploy to GitHub Pages
         env:
           CI: false
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Reference your GitHub token secret
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Token do GitHub Actions
         run: |
           cd painel-dashboard
+          # Definir a URL remota para usar o GITHUB_TOKEN para autenticação
+          git remote set-url origin https://$GITHUB_TOKEN@github.com/${{ github.repository }}.git
+          # Realizar o deploy com gh-pages
           npm run deploy
