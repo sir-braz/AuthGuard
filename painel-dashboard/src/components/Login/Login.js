@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import './Login.css';
+import { TextField, Button, CircularProgress, Alert, Box, Typography } from '@mui/material';
+import { styled } from '@mui/system';
 
 const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
@@ -51,62 +52,104 @@ const Login = ({ setIsAuthenticated }) => {
   };
 
   return (
-    <div className="login-container">
-      <div className="form-card">
-        <h2 className="text-center mb-4">Login</h2>
+    <Box sx={styles.container}>
+      <Box sx={styles.formCard}>
+        <Typography variant="h5" component="h2" sx={styles.title}>
+          Login
+        </Typography>
 
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && <Alert severity="error" sx={styles.alert}>{error}</Alert>}
 
         <form onSubmit={handleLogin}>
-          <div className="mb-3">
-            <label htmlFor="username" className="form-label">Usuário</label>
-            <input
-              type="text"
-              className="form-control"
-              id="username"
-              placeholder="Digite seu usuário"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
+          <TextField
+            label="Usuário"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            sx={styles.input}
+          />
 
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">Senha</label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              placeholder="Digite sua senha"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+          <TextField
+            label="Senha"
+            type="password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            sx={styles.input}
+          />
 
-          <button 
-            type="submit" 
-            className="btn btn-primary w-100 mt-4 btn-submit"
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={styles.submitButton}
             disabled={loading}
           >
-            {loading ? (
-              <>
-                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
-                Entrando...
-              </>
-            ) : (
-              'Login'
-            )}
-          </button>
+            {loading ? <CircularProgress size={24} color="inherit" /> : 'Login'}
+          </Button>
         </form>
 
-        <div className="text-center mt-3">
-          <span>Ainda não tem uma conta?</span>{' '}
-          <Link to="/register" className="btn-link">Registre-se aqui</Link>
-        </div>
-      </div>
-    </div>
+        <Box sx={styles.registerLink}>
+          <Typography variant="body2">
+            Ainda não tem uma conta?{' '}
+            <Link to="/register" style={styles.link}>
+              Registre-se aqui
+            </Link>
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
   );
+};
+
+// Estilos usando Material-UI
+const styles = {
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    background: 'linear-gradient(135deg, #6c5ce7, #ff7675)',
+  },
+  formCard: {
+    backgroundColor: 'white',
+    borderRadius: '12px',
+    padding: '40px',
+    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    width: '100%',
+    maxWidth: '400px',
+    textAlign: 'center',
+  },
+  title: {
+    marginBottom: '20px',
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  alert: {
+    marginBottom: '20px',
+  },
+  input: {
+    marginBottom: '16px',
+  },
+  submitButton: {
+    padding: '12px',
+    fontWeight: 'bold',
+  },
+  registerLink: {
+    marginTop: '20px',
+  },
+  link: {
+    color: '#6c5ce7',
+    textDecoration: 'none',
+    fontWeight: '600',
+  },
 };
 
 export default Login;

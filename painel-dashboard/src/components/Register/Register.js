@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Register.css';
+import { useNavigate, Link } from 'react-router-dom';
+import { TextField, Button, CircularProgress, Alert, Box, Typography } from '@mui/material';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
   const validateFields = () => {
@@ -15,127 +14,139 @@ const Register = () => {
       setError('Por favor, preencha todos os campos.');
       return false;
     }
-
-    if (username.length < 3) {
-      setError('O nome de usuário deve ter pelo menos 3 caracteres.');
-      return false;
-    }
-
-    if (password.length < 6) {
-      setError('A senha deve ter pelo menos 6 caracteres.');
-      return false;
-    }
-
     return true;
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
     setError('');
-    setSuccess(false);
+    setLoading(true);
 
     if (!validateFields()) {
+      setLoading(false);
       return;
     }
 
-    setLoading(true);
-
     try {
-      const userData = { username, password };
       const response = await fetch('https://api.paofacil.xyz/api/auth/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Basic ' + btoa('user:d2dc2c2f-70ad-423b-adaf-48a1bb9f7b70'),
-        },
-        body: JSON.stringify(userData),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
       });
 
-      const contentType = response.headers.get('content-type');
-      let responseData;
+      const data = await response.json();
 
-      if (contentType && contentType.includes('application/json')) {
-        responseData = await response.json();
+      if (response.ok) {
+        navigate('/login'); // Redireciona para a página de login após registro
       } else {
-        responseData = await response.text();
-        throw new Error(responseData || 'Erro desconhecido');
+        setError(data.message || 'Erro ao registrar o usuário!');
       }
-
-      if (!response.ok) {
-        throw new Error(responseData.message || 'Erro ao registrar');
-      }
-
-      // Sucesso no registro, exibe mensagem de sucesso
-      setSuccess(true);
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000); // Redireciona após 2 segundos
-    } catch (err) {
-      setError('Erro ao registrar. Por favor, tente novamente.');
-      console.error(err); // Log do erro para debug
+    } catch (error) {
+      setError('Erro de conexão. Verifique sua internet.');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleGoToLogin = () => {
-    navigate('/login');
-  };
-
   return (
-    <div className="login-container">
-      <div className="form-card">
-        <h2 className="text-center mb-4">Registro</h2>
+    <Box sx={styles.container}>
+      <Box sx={styles.formCard}>
+        <Typography variant="h5" component="h2" sx={styles.title}>
+          Registro
+        </Typography>
 
-        {error && <div className="alert alert-danger">{error}</div>}
-        {success && <div className="alert alert-success">Registro realizado com sucesso! Redirecionando...</div>}
+        {error && <Alert severity="error" sx={styles.alert}>{error}</Alert>}
 
         <form onSubmit={handleRegister}>
-          <div className="mb-3">
-            <label htmlFor="username" className="form-label">Nome de Usuário</label>
-            <input
-              type="text"
-              id="username"
-              className="form-control"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Digite seu nome de usuário"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">Senha</label>
-            <input
-              type="password"
-              id="password"
-              className="form-control"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Digite sua senha"
-              required
-            />
-          </div>
+          <TextField
+            label="Usuário"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            sx={styles.input}
+          />
 
-          <button type="submit" className="btn btn-submit w-100" disabled={loading}>
-            {loading ? (
-              <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            ) : (
-              'Registrar'
-            )}
-          </button>
+          <TextField
+            label="Senha"
+            type="password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            sx={styles.input}
+          />
+
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={styles.submitButton}
+            disabled={loading}
+          >
+            {loading ? <CircularProgress size={24} color="inherit" /> : 'Registrar'}
+          </Button>
         </form>
 
-        <div className="text-center mt-3">
-          <p>
+        <Box sx={styles.loginLink}>
+          <Typography variant="body2">
             Já tem uma conta?{' '}
-            <button className="btn btn-link p-0" onClick={handleGoToLogin}>
-              Faça login aqui.
-            </button>
-          </p>
-        </div>
-      </div>
-    </div>
+            <Link to="/login" style={styles.link}>
+              Faça login aqui
+            </Link>
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
   );
+};
+
+// Estilos utilizando Material-UI
+const styles = {
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    background: 'linear-gradient(135deg, #6c5ce7, #ff7675)',
+  },
+  formCard: {
+    backgroundColor: 'white',
+    borderRadius: '12px',
+    padding: '40px',
+    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    width: '100%',
+    maxWidth: '400px',
+    textAlign: 'center',
+  },
+  title: {
+    marginBottom: '20px',
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  alert: {
+    marginBottom: '20px',
+  },
+  input: {
+    marginBottom: '16px',
+  },
+  submitButton: {
+    padding: '12px',
+    fontWeight: 'bold',
+  },
+  loginLink: {
+    marginTop: '20px',
+  },
+  link: {
+    color: '#6c5ce7',
+    textDecoration: 'none',
+    fontWeight: '600',
+  },
 };
 
 export default Register;

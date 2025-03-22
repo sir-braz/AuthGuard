@@ -1,129 +1,102 @@
-/* Estilos gerais */
+/* Fundo suave */
+body {
+  background: linear-gradient(135deg, #6c5ce7, #ff7675);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: #fff;
+}
+
+/* Cartão de login */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: #f8f9fa;
-  padding: 20px;
+  height: 100%;
 }
 
-/* Card do formulário */
 .form-card {
-  background-color: #ffffff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
 }
 
-/* Título do formulário */
-.form-card h2 {
+h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
   text-align: center;
-  margin-bottom: 1.5rem;
-  color: #333;
-  font-size: 1.75rem;
 }
 
-/* Campos do formulário */
-.form-group {
-  margin-bottom: 1.5rem;
+/* Erro de mensagem */
+.alert {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 600;
 }
 
-.form-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #555;
-  font-weight: 500;
-}
-
+/* Inputs */
 .form-control {
-  width: 100%;
-  padding: 0.75rem;
+  background-color: #f9f9f9;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-  color: #333;
-  transition: border-color 0.3s ease;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
 }
 
 .form-control:focus {
-  border-color: #007bff;
+  border-color: #6c5ce7;
+  box-shadow: 0 0 5px rgba(108, 92, 231, 0.5);
   outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-/* Botão de submit */
+/* Botão */
 .btn-submit {
-  background-color: #007bff;
-  color: #fff;
-  padding: 0.75rem;
+  background-color: #6c5ce7;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .btn-submit:hover {
-  background-color: #0056b3;
+  background-color: #5e48d4;
 }
 
 .btn-submit:disabled {
-  background-color: #6c757d;
+  background-color: #b1a7ff;
   cursor: not-allowed;
-}
-
-/* Mensagens de alerta */
-.alert {
-  padding: 0.75rem;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.alert-danger {
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-  color: #721c24;
 }
 
 /* Link de registro */
 .btn-link {
-  color: #007bff;
+  color: #6c5ce7;
   text-decoration: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  font-size: 1rem;
-  transition: color 0.3s ease;
+  font-weight: 600;
 }
 
 .btn-link:hover {
-  color: #0056b3;
-  text-decoration: underline;
+  color: #5e48d4;
 }
 
-/* Responsividade */
-@media (max-width: 480px) {
-  .form-card {
-    padding: 1.5rem;
-  }
-
-  .form-card h2 {
-    font-size: 1.5rem;
-  }
-
-  .form-control {
-    padding: 0.5rem;
-    font-size: 0.9rem;
-  }
-
-  .btn-submit {
-    padding: 0.5rem;
-    font-size: 0.9rem;
-  }
+/* Textos no rodapé */
+.text-center {
+  font-size: 14px;
+  margin-top: 20px;
+  color: #fff;
 }
