@@ -23,7 +23,7 @@ jobs:
 
       - name: Instalar dependências
         run: |
-          cd frontend
+          cd painel-dashboard
           npm install
 
       - name: Build do projeto
