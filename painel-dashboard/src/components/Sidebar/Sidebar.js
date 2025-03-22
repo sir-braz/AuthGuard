@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, IconButton, Divider, Box, useMediaQuery } from '@mui/material';
-import { FaHome, FaChartBar, FaBox, FaUsers, FaArrowRight, FaBreadSlice, FaUser } from 'react-icons/fa';
+import { FaHome, FaChartBar, FaBox, FaArrowRight, FaBreadSlice, FaUser } from 'react-icons/fa';
 import { useTheme } from '@mui/material/styles';
 import './Sidebar.css';
 
