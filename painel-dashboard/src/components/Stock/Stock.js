@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Modal, TextField } from '@mui/material';
-import { FaBox, FaPlus, FaTrash, FaEdit } from 'react-icons/fa';
+import { FaBox, FaPlus, FaTrash } from 'react-icons/fa';
 import './Stock.css';
 
 const initialStock = [

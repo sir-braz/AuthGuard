@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, TextField, Button, Paper, Grid } from '@mui/material';
 import { FaUser, FaEdit } from 'react-icons/fa';
 import './Profile.css'
