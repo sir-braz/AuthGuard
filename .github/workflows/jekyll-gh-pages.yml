@@ -1,0 +1,37 @@
+name: Deploy React to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Ou o nome do branch principal do seu repositório
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependências
+        run: |
+          cd frontend
+          npm install
+
+      - name: Construir o projeto
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Fazer deploy para GitHub Pages
+        run: |
+          cd frontend
+          npm run deploy
