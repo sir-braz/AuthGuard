@@ -35,5 +35,5 @@ jobs:
         env:
           CI: false
         run: |
-          cd frontend
+          cd painel-dashboard
           npm run deploy
