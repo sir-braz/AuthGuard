@@ -10,18 +10,17 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
     setIsAuthenticated(!!token);
   }, []);
 
   const handleLogin = () => {
-    localStorage.setItem('token', 'your-token');
+    localStorage.setItem('authToken', 'your-token');
     setIsAuthenticated(true);
   };
 
   const handleLogout = () => {
-    // Remove o token e desautentica o usuário
-    localStorage.removeItem('token');
+    localStorage.removeItem('authToken');
     setIsAuthenticated(false);
   };
 

@@ -15,10 +15,21 @@ const defaultMenuItems = [
 const Sidebar = ({ menuItems = defaultMenuItems, logoText = "PaoFacil" }) => {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    window.location.reload();
-    navigate('/login');
+  const handleLogout = async () => {
+    try {
+      await fetch('https://api.paofacil.xyz/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      localStorage.removeItem('authToken');
+      navigate('/login');
+      window.location.reload();
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error);
+    }
   };
 
   return (
