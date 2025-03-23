@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar/Sidebar';
 import Login from './components/Login/Login';
-import Register from './components/Register/Register';
+// import Register from './components/Register/Register';
 import Profile from './components/Profile/Profile';
 import './App.css';
 
@@ -36,7 +36,6 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Navigate to={isAuthenticated ? "/profile" : "/login"} />} />
             <Route path="/login" element={isAuthenticated ? <Navigate to="/profile" /> : <Login setIsAuthenticated={handleLogin} />} />
-            <Route path="/register" element={isAuthenticated ? <Navigate to="/profile" /> : <Register />} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           </Routes>
         </div>
