@@ -18,8 +18,10 @@ Reduzir o desperdício de alimentos nas padarias por meio de:
 /ZeroSobra
 ├── /frontend      # React + Dashboard Analytics
 ├── /backend       # Spring Boot + API de Gestão
+├── /mobile        # Flutter (Versão Mobile) → Futura Implementação
 ├── /ai-module     # Modelo Preditivo (Python/ML) → Futura Implementação
 └── /docs          # Documentação de Requisitos
+
 ```
 
 
