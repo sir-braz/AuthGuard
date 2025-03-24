@@ -17,7 +17,7 @@ const Sidebar = ({ menuItems = defaultMenuItems, logoText = "PaoFacil" }) => {
 
   const handleLogout = async () => {
     try {
-      await fetch('https://api.zerosobraxzy.xyz/api/auth/logout', {
+      await fetch('https://api.zerosobra.xyz/api/auth/logout', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
