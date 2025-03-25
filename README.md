@@ -11,20 +11,17 @@
 6. [Tecnologias Utilizadas](#6-tecnologias-utilizadas)  
 7. [Conclusão](#7-conclusão)  
 
-
 ## **1. Visão Geral**  
-O **ZeroSobra** é um sistema de gestão para padarias, com foco em **redução do desperdício de alimentos** e **controle da jornada de trabalho dos funcionários** por meio de uma **Folha de Ponto Digital**.  
+O **ZeroSobra** é um sistema de gestão para padarias, focado na **redução do desperdício de alimentos** e no **controle da jornada de trabalho dos funcionários** por meio de uma **Folha de Ponto Digital**.  
 
-Ele combina **análises preditivas**, **alertas inteligentes** e **integração entre estoque e vendas** para evitar perdas e otimizar a produção. Além disso, permite **registrar e monitorar a jornada dos funcionários**, garantindo uma gestão eficiente da equipe.  
-
+Ele utiliza **análises preditivas**, **alertas inteligentes** e **integração entre estoque e vendas** para minimizar sobras e otimizar a utilização dos insumos. Além disso, permite **registrar e monitorar a jornada dos funcionários**, garantindo uma gestão eficiente da equipe.  
 
 ## **2. Objetivos**  
-✅ **Otimizar a produção** com base em dados históricos.  
+✅ **Reduzir desperdícios** de insumos e produtos acabados.  
 ✅ **Emitir alertas** sobre sobras em tempo real.  
 ✅ **Gerar relatórios** detalhados sobre desperdícios.  
-✅ **Integrar estoque e vendas** para evitar superprodução.  
+✅ **Integrar estoque e vendas** para evitar excessos.  
 ✅ **Folha de Ponto Digital** para controle da jornada dos funcionários.  
-
 
 ## **3. Estrutura do Projeto**  
 ```
@@ -36,7 +33,6 @@ Ele combina **análises preditivas**, **alertas inteligentes** e **integração 
 └── /docs          # Documentação de Requisitos
 ```
 
-
 ## **4. Requisitos do Sistema**  
 
 ### **4.1 Requisitos Funcionais**  
@@ -44,11 +40,11 @@ Ele combina **análises preditivas**, **alertas inteligentes** e **integração 
 |--------|-------------|-------------|  
 | **RF01** | Permitir o cadastro de produtos e insumos. | Alta |  
 | **RF02** | Registrar as vendas realizadas diariamente. | Alta |  
-| **RF03** | Gerar relatórios de desperdício de produtos. | Alta |  
+| **RF03** | Gerar relatórios de desperdício de insumos e produtos. | Alta |  
 | **RF04** | Emitir alertas em tempo real sobre sobras acima do limite. | Alta |  
-| **RF05** | Prever a demanda com base no histórico de vendas. | Média |  
-| **RF06** | Permitir o ajuste manual da previsão de produção. | Média |  
-| **RF07** | Integrar estoque e vendas para otimizar a produção. | Alta |  
+| **RF05** | Analisar dados históricos para reduzir desperdícios. | Média |  
+| **RF06** | Permitir ajustes manuais nas previsões de consumo. | Média |  
+| **RF07** | Integrar estoque e vendas para otimizar a utilização dos insumos. | Alta |  
 | **RF08** | Oferecer dashboards de análise para tomada de decisão. | Média |  
 | **RF09** | **Implementar uma Folha de Ponto Digital para controle da jornada.** | Alta |  
 | **RF10** | Permitir que funcionários batam ponto digitalmente via web ou mobile. | Alta |  
@@ -65,17 +61,16 @@ Ele combina **análises preditivas**, **alertas inteligentes** e **integração 
 | **RNF05** | O módulo de IA deve ser baseado em **Python** e utilizar técnicas de **Machine Learning**. | Média |  
 | **RNF06** | O sistema deve armazenar dados em um banco de dados relacional seguro. | Alta |  
 
-
 ## **5. Casos de Uso**  
 
-### **5.1 Caso de Uso: Controle de Produção e Desperdício**  
+### **5.1 Caso de Uso: Controle de Desperdício**  
 **Ator Principal:** Gerente da Padaria  
-**Descrição:** O gerente acessa o sistema para visualizar a previsão de demanda e ajustar a produção conforme necessário.  
+**Descrição:** O gerente acessa o sistema para visualizar dados de desperdício e tomar decisões para reduzir perdas.  
 **Fluxo Principal:**  
 1. O gerente acessa o painel do ZeroSobra.  
-2. O sistema exibe o histórico de vendas e a previsão para os próximos dias.  
-3. O gerente ajusta manualmente os números, se necessário.  
-4. O sistema salva as alterações e atualiza os alertas de produção.  
+2. O sistema exibe relatórios e alertas sobre sobras de produtos.  
+3. O gerente pode ajustar previsões para minimizar desperdícios.  
+4. O sistema salva as alterações e atualiza os alertas de estoque.  
 
 ### **5.2 Caso de Uso: Registro de Ponto Digital**  
 **Ator Principal:** Funcionário da Padaria  
@@ -85,13 +80,12 @@ Ele combina **análises preditivas**, **alertas inteligentes** e **integração 
 2. O sistema registra o horário de entrada, saída ou intervalo.  
 3. O gerente pode visualizar relatórios de jornada dos funcionários.  
 
-
 ## **6. Tecnologias Utilizadas**  
 - **Frontend:** React.js  
 - **Backend:** Spring Boot (Java)  
 - **Banco de Dados:** PostgreSQL  
 
-
 ## **7. Conclusão**  
-O **ZeroSobra** é um sistema completo para gestão de **produção e desperdício de alimentos**, além de fornecer um **controle eficiente da jornada de trabalho** dos funcionários via **Folha de Ponto Digital**.  
+O **ZeroSobra** é um sistema completo para gestão do **desperdício de alimentos**, além de fornecer um **controle eficiente da jornada de trabalho** dos funcionários via **Folha de Ponto Digital**.  
+
 
