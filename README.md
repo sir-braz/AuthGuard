@@ -105,3 +105,28 @@ O **GestãoTrabalho** é um sistema de gestão de funcionários com foco princip
 5. O gerente aprova os registros para processamento da folha de pagamento.  
 6. O sistema atualiza o status dos registros para "aprovado" e gera um relatório para folha de pagamento.  
 
+
+## **6. Tecnologias Utilizadas**
+
+### **Frontend:**
+- **React.js**  
+  Utilizado para criar uma interface interativa e responsiva, garantindo uma experiência de usuário intuitiva. O React.js permite que a aplicação seja rápida e escalável, oferecendo uma interface rica com componentes reutilizáveis.
+
+### **Backend:**
+- **Spring Boot (Java)**  
+  O backend é construído utilizando o framework Spring Boot, que é altamente escalável, seguro e eficiente. Ele facilita a criação de APIs RESTful robustas, oferecendo alta performance e flexibilidade para integrar outros sistemas.
+
+### **Banco de Dados:**
+- **PostgreSQL**  
+  Um banco de dados relacional, confiável e altamente seguro, ideal para armazenar registros de jornada de trabalho dos funcionários, incluindo dados sensíveis, como horários de entrada e saída, intervalos, e horas extras. O PostgreSQL garante a integridade e a segurança dos dados.
+
+### **Tecnologias Futura (Mobile):**
+- **Flutter**  
+  O Flutter será utilizado para criar a versão móvel do sistema, permitindo que os funcionários registrem seus pontos e visualizem dados de jornada de trabalho de maneira prática e flexível, diretamente em seus dispositivos móveis.
+
+### **Outras Tecnologias:**
+- **Docker**  
+  Utilizado para containerizar a aplicação, garantindo que ela possa ser executada em qualquer ambiente sem inconsistências, melhorando a escalabilidade e manutenção do sistema.
+  
+- **JWT (JSON Web Tokens)**  
+  Utilizado para garantir a segurança no gerenciamento de autenticação e autorização, permitindo que apenas usuários autenticados possam acessar o sistema e suas funcionalidades.
