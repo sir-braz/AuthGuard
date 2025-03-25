@@ -17,7 +17,6 @@ Reduzir o desperdício de alimentos nas padarias por meio de:
 ├── /frontend      # React + Dashboard Analytics
 ├── /backend       # Spring Boot + API de Gestão
 ├── /mobile        # Flutter (Versão Mobile) → Futura Implementação
-├── /ai-module     # Modelo Preditivo (Python/ML) → Futura Implementação
 └── /docs          # Documentação de Requisitos
 
 ```
@@ -45,7 +44,6 @@ A seguir, os requisitos foram modelados de acordo com a Engenharia de Requisitos
 | **RNF02** | O backend deve utilizar a tecnologia **Spring Boot** para garantir escalabilidade. | Alta |
 | **RNF03** | O frontend deve ser desenvolvido com **React** para melhor experiência do usuário. | Alta |
 | **RNF04** | O sistema deve processar grandes volumes de dados sem comprometer a performance. | Média |
-| **RNF05** | O módulo de IA deve ser baseado em **Python** e utilizar técnicas de **Machine Learning**. | Média |
 | **RNF06** | O sistema deve armazenar dados em um banco de dados relacional seguro. | Alta |
 
 
