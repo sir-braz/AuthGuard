@@ -62,3 +62,61 @@ O **GestãoTrabalho** é um sistema de gestão de funcionários com foco princip
 | **RNF08** | O sistema deve ser projetado para ser facilmente escalável, para suportar o crescimento da base de dados e a inclusão de novos recursos no futuro. | Média |
 | **RNF09** | O sistema deve ter tempos de resposta rápidos para a interação com os usuários (funcionários e gestores), proporcionando uma experiência ágil. | Alta |
 | **RNF10** | O sistema deve ser compatível com os principais navegadores (Chrome, Firefox, Safari, Edge) e garantir um design responsivo. | Alta |
+
+
+## **5. Casos de Uso**
+
+### **5.1 Caso de Uso: Registro de Ponto Digital**  
+**Ator Principal:** Funcionário  
+**Descrição:** O funcionário registra sua jornada de trabalho de forma digital através do sistema.  
+**Fluxo Principal:**  
+1. O funcionário acessa o sistema (via desktop ou mobile) e seleciona a opção de **bater ponto**.  
+2. O sistema registra o horário de entrada, saída ou intervalo conforme a ação escolhida.  
+3. O sistema armazena os dados de forma segura no banco de dados.  
+4. O gerente pode acessar esses registros para validação e geração de relatórios.  
+5. O sistema emite alertas sobre qualquer inconsistência, como falta de batida de ponto ou horário de saída fora do esperado.
+
+### **5.2 Caso de Uso: Gerenciamento de Jornada**  
+**Ator Principal:** Gerente  
+**Descrição:** O gerente verifica e ajusta os registros de ponto, gerencia os horários de trabalho dos funcionários e aprova as horas trabalhadas.  
+**Fluxo Principal:**  
+1. O gerente acessa o painel de controle do **GestãoTrabalho**.  
+2. O sistema exibe uma visão geral da jornada de todos os funcionários (entradas, saídas, intervalos).  
+3. O gerente verifica os registros de ponto, corrige eventuais erros (se necessário) e aprova as horas.  
+4. O sistema gera relatórios de horas trabalhadas, faltas, atrasos e horas extras para controle de folha de pagamento.  
+5. O sistema emite alertas sobre inconsistências, como atrasos ou batidas de ponto não registradas.
+
+### **5.3 Caso de Uso: Relatórios de Jornada de Trabalho**  
+**Ator Principal:** Gerente  
+**Descrição:** O gerente pode gerar relatórios detalhados sobre as horas trabalhadas, atrasos, horas extras e faltas dos funcionários.  
+**Fluxo Principal:**  
+1. O gerente acessa a seção de relatórios no painel de controle.  
+2. O sistema exibe diferentes opções de relatórios: horas trabalhadas, horas extras, atrasos e faltas.  
+3. O gerente seleciona o tipo de relatório desejado e o período de análise.  
+4. O sistema gera e exibe o relatório para visualização ou exportação.
+
+### **5.4 Caso de Uso: Aprovação de Ponto**  
+**Ator Principal:** Gerente  
+**Descrição:** O gerente revisa e aprova os registros de ponto dos funcionários, garantindo que as informações sejam precisas antes de serem usadas para folha de pagamento.  
+**Fluxo Principal:**  
+1. O gerente acessa o painel de controle do sistema.  
+2. O sistema exibe uma lista de registros de ponto pendentes para aprovação.  
+3. O gerente verifica os registros de ponto de cada funcionário, incluindo horas de entrada, saída e intervalos.  
+4. Caso necessário, o gerente faz ajustes manuais nos registros de ponto.  
+5. O gerente aprova os registros para processamento da folha de pagamento.  
+6. O sistema atualiza o status dos registros para "aprovado" e gera um relatório para folha de pagamento.  
+
+## **6. Tecnologias Utilizadas**
+
+### **Frontend:**
+- **React.js**  
+  Utilizado para criar uma interface interativa e responsiva, garantindo uma experiência de usuário intuitiva. O React.js permite que a aplicação seja rápida e escalável, oferecendo uma interface rica com componentes reutilizáveis.
+
+### **Backend:**
+- **Spring Boot (Java)**  
+  O backend é construído utilizando o framework Spring Boot, que é altamente escalável, seguro e eficiente. Ele facilita a criação de APIs RESTful robustas, oferecendo alta performance e flexibilidade para integrar outros sistemas.
+
+### **Banco de Dados:**
+- **PostgreSQL**  
+  Um banco de dados relacional, confiável e altamente seguro, ideal para armazenar registros de jornada de trabalho dos funcionários, incluindo dados sensíveis, como horários de entrada e saída, intervalos, e horas extras. O PostgreSQL garante a integridade e a segurança dos dados.
+
