@@ -48,7 +48,6 @@ O **GestãoTrabalho** é um sistema de gestão de funcionários com foco princip
 | **RF11** | Gerar relatórios analíticos sobre a frequência, faltas e produtividade dos funcionários. | Média |
 
 
-
 ### **4.2 Requisitos Não Funcionais**  
 | **ID**  | **Descrição** | **Prioridade** |
 |---------|---------------|----------------|
@@ -105,18 +104,4 @@ O **GestãoTrabalho** é um sistema de gestão de funcionários com foco princip
 4. Caso necessário, o gerente faz ajustes manuais nos registros de ponto.  
 5. O gerente aprova os registros para processamento da folha de pagamento.  
 6. O sistema atualiza o status dos registros para "aprovado" e gera um relatório para folha de pagamento.  
-
-## **6. Tecnologias Utilizadas**
-
-### **Frontend:**
-- **React.js**  
-  Utilizado para criar uma interface interativa e responsiva, garantindo uma experiência de usuário intuitiva. O React.js permite que a aplicação seja rápida e escalável, oferecendo uma interface rica com componentes reutilizáveis.
-
-### **Backend:**
-- **Spring Boot (Java)**  
-  O backend é construído utilizando o framework Spring Boot, que é altamente escalável, seguro e eficiente. Ele facilita a criação de APIs RESTful robustas, oferecendo alta performance e flexibilidade para integrar outros sistemas.
-
-### **Banco de Dados:**
-- **PostgreSQL**  
-  Um banco de dados relacional, confiável e altamente seguro, ideal para armazenar registros de jornada de trabalho dos funcionários, incluindo dados sensíveis, como horários de entrada e saída, intervalos, e horas extras. O PostgreSQL garante a integridade e a segurança dos dados.
 
