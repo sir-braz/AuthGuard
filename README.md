@@ -1,78 +1,89 @@
-**Sistema de Gestão para Padarias**  
-
-## **1. Visão Geral**  
-O ZeroSobra é um sistema de gestão para padarias, focado na redução do desperdício de alimentos e no controle da jornada de trabalho dos funcionários por meio de uma Folha de Ponto Digital.
-
-## **2. Objetivo Principal**  
-Reduzir o desperdício de alimentos nas padarias por meio de:  
-
-✅ Controle de produção baseado em dados históricos de vendas.  
-✅ Alertas de sobras em tempo real para ajustes na produção.  
-✅ Relatórios de desperdício com causas e sugestões de correção.  
 
 
-## **3. Estrutura do Projeto**  
-```
+ZeroSobra – Gestão Inteligente de Padarias
+
+1. Visão Geral
+
+O ZeroSobra é um sistema completo para gestão de padarias, focado em redução de desperdícios e otimização do fluxo de caixa. Ele combina inteligência artificial, controle financeiro e análise de vendas para ajudar donos de padarias a tomarem decisões mais estratégicas.
+
+2. Objetivos Principais
+
+✅ Redução de desperdícios com previsão inteligente de produção.
+✅ Controle de fluxo de caixa automatizado com categorização de despesas.
+✅ Integração entre vendas, estoque e finanças para melhor gestão do negócio.
+✅ Alertas em tempo real sobre sobras excessivas e riscos financeiros.
+✅ Dashboard unificado para acompanhar métricas essenciais da padaria.
+
+3. Estrutura do Projeto
+
 /ZeroSobra
-├── /frontend      # React + Dashboard Analytics
+├── /frontend      # React + Dashboard Financeiro e de Produção
 ├── /backend       # Spring Boot + API de Gestão
-├── /mobile        # Flutter (Versão Mobile) → Futura Implementação
+├── /mobile        # Flutter (Versão Mobile – Futura Implementação)
 └── /docs          # Documentação de Requisitos
 
-```
+4. Módulos Principais
 
+4.1 Controle de Produção e Estoque
+	•	Registro automático de vendas e ajuste do estoque.
+	•	Previsão de demanda com IA para evitar superprodução.
+	•	Alertas de desperdício para reduzir perdas.
 
-## **4. Requisitos do Sistema**  
-A seguir, os requisitos foram modelados de acordo com a Engenharia de Requisitos.
+4.2 Gestão Financeira e Fluxo de Caixa
+	•	Registro automático de entradas e saídas.
+	•	Dashboard financeiro com gráficos de lucros e despesas.
+	•	Previsão de caixa para evitar problemas de liquidez.
+	•	Categorização automática de despesas.
 
-### **4.1 Requisitos Funcionais (RF)**  
-| **ID**  | **Descrição** | **Prioridade** |
-|--------|-------------|-------------|
-| **RF01** | O sistema deve permitir o cadastro de produtos e insumos. | Alta |
-| **RF02** | O sistema deve registrar as vendas realizadas diariamente. | Alta |
-| **RF03** | O sistema deve gerar relatórios de desperdício de produtos. | Alta |
-| **RF04** | O sistema deve emitir alertas em tempo real sobre sobras acima do limite definido. | Alta |
-| **RF05** | O sistema deve prever a demanda com base no histórico de vendas. | Média |
-| **RF06** | O sistema deve permitir o ajuste manual da previsão de produção. | Média |
-| **RF08** | O sistema deve oferecer dashboards de análise para tomada de decisão. | Média |
+5. Requisitos do Sistema
 
+5.1 Requisitos Funcionais (RF)
 
-### **4.2 Requisitos Não Funcionais (RNF)**  
-| **ID**  | **Descrição** | **Prioridade** |
-|--------|-------------|-------------|
-| **RNF01** | O sistema deve ser acessível via web em dispositivos desktop e mobile. | Alta |
-| **RNF02** | O backend deve utilizar a tecnologia **Spring Boot** para garantir escalabilidade. | Alta |
-| **RNF03** | O frontend deve ser desenvolvido com **React** para melhor experiência do usuário. | Alta |
-| **RNF04** | O sistema deve processar grandes volumes de dados sem comprometer a performance. | Média |
-| **RNF06** | O sistema deve armazenar dados em um banco de dados relacional seguro. | Alta |
+ID	Descrição	Prioridade
+RF01	O sistema deve registrar todas as entradas e saídas financeiras.	Alta
+RF02	O sistema deve gerar relatórios de desperdício de produtos.	Alta
+RF03	O sistema deve prever a demanda com base no histórico de vendas.	Alta
+RF04	O sistema deve emitir alertas em tempo real sobre sobras e fluxo de caixa negativo.	Alta
+RF05	O sistema deve permitir ajustes manuais na previsão de produção e fluxo de caixa.	Média
+RF06	O sistema deve oferecer dashboards de análise financeira e de produção.	Média
+RF07	O sistema deve integrar-se com maquininhas de cartão e bancos para conciliação financeira.	Média
 
+5.2 Requisitos Não Funcionais (RNF)
 
-## **5. Casos de Uso Principais**  
-### **5.1 Caso de Uso: Gerenciamento de Produção**  
-**Ator Principal:** Gerente da Padaria  
-**Descrição:** O gerente acessa o sistema para visualizar a previsão de demanda e ajustar a produção conforme necessário.  
-**Fluxo Principal:**  
-1. O gerente acessa o painel do ZeroSobra.  
-2. O sistema exibe o histórico de vendas e a previsão para os próximos dias.  
-3. O gerente ajusta manualmente os números, se necessário.  
-4. O sistema salva as alterações e atualiza os alertas de produção.  
+ID	Descrição	Prioridade
+RNF01	O sistema deve ser acessível via web e mobile.	Alta
+RNF02	O backend deve utilizar Spring Boot para escalabilidade.	Alta
+RNF03	O frontend deve ser desenvolvido com React para melhor experiência do usuário.	Alta
+RNF04	O sistema deve garantir segurança dos dados financeiros e de vendas.	Alta
+RNF05	O sistema deve suportar múltiplos usuários com níveis de permissão.	Média
 
+6. Casos de Uso Principais
 
-### **5.2 Caso de Uso: Controle de Estoque e Vendas**  
-**Ator Principal:** Funcionário da Padaria  
-**Descrição:** O funcionário registra as vendas e atualiza o estoque automaticamente.  
-**Fluxo Principal:**  
-1. O funcionário insere as vendas do dia no sistema.  
-2. O sistema atualiza automaticamente o estoque.  
-3. Caso haja risco de sobras, um alerta é gerado para ajuste na produção futura.  
+6.1 Caso de Uso: Controle de Produção e Estoque
 
+Ator Principal: Gerente da Padaria
+Descrição: O gerente acessa o sistema para visualizar a previsão de demanda e ajustar a produção conforme necessário.
+Fluxo Principal:
+	1.	O sistema exibe o histórico de vendas e a previsão para os próximos dias.
+	2.	O gerente ajusta manualmente os números, se necessário.
+	3.	O sistema salva as alterações e atualiza os alertas de produção.
 
-## **6. Tecnologias Utilizadas**  
-- **Frontend:** React.js  
-- **Backend:** Spring Boot (Java)  
-- **Banco de Dados:** PostgreSQL  
-- **Machine Learning:** Python (Futura implementação)  
+6.2 Caso de Uso: Controle de Fluxo de Caixa
 
+Ator Principal: Dono da Padaria
+Descrição: O dono da padaria acompanha em tempo real todas as movimentações financeiras da empresa.
+Fluxo Principal:
+	1.	O sistema recebe automaticamente os dados de vendas e pagamentos.
+	2.	O usuário visualiza o saldo diário e as previsões de caixa.
+	3.	O sistema alerta sobre riscos financeiros ou saldo abaixo do necessário.
 
-## **7. Conclusão**  
-O ZeroSobra busca otimizar a gestão de padarias, reduzindo o desperdício e aumentando a eficiência operacional. A implementação de um sistema inteligente permitirá melhor controle da produção e integração eficiente entre vendas e estoque.  
+7. Tecnologias Utilizadas
+	•	Frontend: React.js
+	•	Backend: Spring Boot (Java)
+	•	Banco de Dados: PostgreSQL
+	•	Machine Learning: Python (para previsão de demanda e fluxo de caixa)
+	•	Integrações: APIs bancárias e de pagamento
+
+8. Conclusão
+
+O ZeroSobra agora combina redução de desperdício e gestão financeira, ajudando as padarias a produzirem na medida certa e manterem o fluxo de caixa saudável. Esse sistema tornará a gestão do negócio mais eficiente e lucrativa.
