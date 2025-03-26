@@ -42,12 +42,6 @@ npm install
 npm start
 ```
 
-### 📱 Mobile *(Futura Implementação)*  
-```bash
-cd mobile
-flutter run
-```
-
 ## 📊 Requisitos  
 
 ### 🔹 Requisitos Funcionais (RF)  
