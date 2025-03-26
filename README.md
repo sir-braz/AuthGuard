@@ -89,21 +89,6 @@ flutter run
 2. O sistema compara com o fluxo de caixa e projeta a necessidade de capital.  
 3. Caso o saldo projetado fique negativo, um alerta é gerado.  
 
-## 🤝 Contribuindo  
 
-1. Faça um **fork** do projeto.  
-2. Crie uma **branch**:  
-   ```bash
-   git checkout -b minha-feature
-   ```  
-3. Faça o **commit** das suas alterações:  
-   ```bash
-   git commit -m "Minha nova feature"
-   ```  
-4. Envie para o repositório:  
-   ```bash
-   git push origin minha-feature
-   ```  
-5. Abra um **Pull Request**.  
 
 
