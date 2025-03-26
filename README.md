@@ -24,9 +24,8 @@ O **ZeroSobra** é um sistema de **gestão financeira** desenvolvido para padari
 
 - **Frontend:** React.js (TypeScript, Styled Components)  
 - **Backend:** Spring Boot (Java, Spring Security, JWT)  
-- **Banco de Dados:** PostgreSQL  
-- **Mobile:** Flutter (Dart) *(futura implementação)*  
-- **Infraestrutura:** Docker, Kubernetes *(futura implementação)*  
+- **Banco de Dados:** PostgreSQL   
+- **Infraestrutura:** Docker 
 
 ## ⚙️ Instalação e Configuração  
 
