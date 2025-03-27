@@ -59,14 +59,6 @@ npm install
 npm start
 ```
 
-Ou com React Native:
-
-```bash
-cd mobile
-npm install
-npx react-native run-android   # ou run-ios, conforme o sistema operacional
-```
-
 ## 📊 **Requisitos**
 
 ### 🔹 **Requisitos Funcionais (RF)**
