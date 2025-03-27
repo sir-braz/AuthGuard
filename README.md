@@ -59,16 +59,6 @@ npm install
 npm start
 ```
 
-### 📱 **Mobile**
-
-Com Flutter:
-
-```bash
-cd mobile
-flutter pub get
-flutter run
-```
-
 Ou com React Native:
 
 ```bash
