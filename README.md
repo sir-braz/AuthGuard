@@ -19,7 +19,7 @@ O **LunarTunes** é uma plataforma dedicada ao streaming musical, oferecendo aos
 ```
 /LunarTunes
 ├── /frontend      # React (Interface de Usuário)
-├── /backend       # Node.js ou Spring Boot (API de Streaming e Gestão de Músicas)
+├── /backend       # Spring Boot (API de Streaming e Gestão de Músicas)
 └── /docs          # Documentação e Requisitos
 ```
 
