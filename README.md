@@ -43,14 +43,6 @@ cd backend
 ./mvnw spring-boot:run
 ```
 
-Ou, se optar pelo Node.js:
-
-```bash
-cd backend
-npm install
-npm start
-```
-
 ### 🌐 **Frontend**
 
 ```bash
