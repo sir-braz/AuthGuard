@@ -1,87 +1,90 @@
-# 💰 ZeroSobra – Gestão Financeira para Padarias  
+# 🌙 **LunarSchool – Sistema de Gestão Escolar**
 
-O **ZeroSobra** é um sistema de **gestão financeira** desenvolvido para padarias, permitindo um **controle eficiente do fluxo de caixa**, **registro de entradas e saídas**, e **análise detalhada de receitas e despesas**.  
+O **LunarSchool** é uma plataforma completa para a gestão escolar, desenvolvida para facilitar a administração de alunos, professores, turmas, notas, frequência e outras atividades acadêmicas. Com uma interface moderna e intuitiva, o LunarSchool garante eficiência e segurança na gestão de uma escola.
 
-## 🚀 Funcionalidades  
+## 🚀 **Funcionalidades**
 
-✅ **Registro Automático de Entradas e Saídas** – Simplifique o controle financeiro.  
-✅ **Dashboard Financeiro** – Visualize gráficos e relatórios de lucros e despesas.  
-✅ **Gestão de Contas a Pagar e Receber** – Controle de boletos, pagamentos e recebimentos.  
-✅ **Alertas Financeiros Inteligentes** – Notificações sobre saldo baixo e contas vencendo.  
-✅ **Segurança e Acessibilidade** – Proteção avançada para dados financeiros e acesso via web e mobile.  
+- **Cadastro de Alunos:** Registre e gerencie informações pessoais, histórico e matrícula dos alunos.
+- **Cadastro de Professores:** Controle dados dos professores, horários e disciplinas.
+- **Gestão de Turmas:** Crie e gerencie turmas, atribuindo professores e definindo horários.
+- **Lançamento de Notas:** Permite que os professores lancem e acompanhem as notas dos alunos.
+- **Controle de Frequência:** Registre a presença e ausência dos alunos, gerando relatórios de frequência.
+- **Relatórios Acadêmicos:** Gere relatórios detalhados sobre desempenho dos alunos, frequência e histórico.
+- **Acesso para Pais/Responsáveis:** Permita que pais e responsáveis acompanhem o desempenho e boletim dos alunos.
 
-## 📁 Estrutura do Projeto  
+## 📁 **Estrutura do Projeto**
 
 ```
-/ZeroSobra
-├── /frontend      # React (Dashboard Financeiro)
-├── /backend       # Spring Boot (API de Gestão Financeira)
+/LunarSchool
+├── /frontend      # React (Dashboard para Administradores, Professores e Pais)
+├── /backend       # Spring Boot (API de Gestão Escolar)
 ├── /mobile        # Flutter (Versão Mobile – Em Desenvolvimento)
 └── /docs          # Documentação e Requisitos
 ```
 
-## 🔧 Tecnologias Utilizadas  
+## 🔧 **Tecnologias Utilizadas**
 
-- **Frontend:** React.js 
-- **Backend:** Spring Boot (Java, Spring Security, JWT)  
-- **Banco de Dados:** PostgreSQL   
-- **Infraestrutura:** Docker 
+- **Frontend:** React.js, TypeScript, Axios, TailwindCSS
+- **Backend:** Java 17+, Spring Boot (Spring Security, JWT, Spring Data JPA, Flyway)
+- **Banco de Dados:** PostgreSQL
+- **Infraestrutura:** Docker
 
-## ⚙️ Instalação e Configuração  
+## ⚙️ **Instalação e Configuração**
 
-### 🖥️ Backend  
+### 🖥️ **Backend**
+
 ```bash
 cd backend
 ./mvnw spring-boot:run
 ```
 
-### 🌐 Frontend  
+### 🌐 **Frontend**
+
 ```bash
 cd frontend
 npm install
 npm start
 ```
 
-## 📊 Requisitos  
+## 📊 **Requisitos**
 
-### 🔹 Requisitos Funcionais (RF)  
+### 🔹 **Requisitos Funcionais (RF)**
 
-| ID   | Descrição                                              | Prioridade |
-|------|------------------------------------------------------|------------|
-| RF01 | Registrar entradas e saídas financeiras             | 🔴 Alta     |
-| RF02 | Gerar relatórios financeiros detalhados             | 🔴 Alta     |
-| RF03 | Gerenciar contas a pagar e a receber                | 🔴 Alta     |
-| RF04 | Emitir alertas sobre saldo crítico e contas vencendo | 🔴 Alta     |
-| RF05 | Permitir múltiplos usuários com níveis de acesso    | 🟡 Média     |
-| RF06 | Oferecer dashboards com indicadores financeiros     | 🟡 Média     |
+| ID   | Descrição                                             | Prioridade |
+|------|-------------------------------------------------------|------------|
+| RF01 | Cadastro e gerenciamento de alunos                  | 🔴 Alta    |
+| RF02 | Cadastro e gerenciamento de professores             | 🔴 Alta    |
+| RF03 | Cadastro e controle de turmas e disciplinas         | 🔴 Alta    |
+| RF04 | Lançamento e acompanhamento de notas                | 🔴 Alta    |
+| RF05 | Registro de presença e controle de frequência       | 🔴 Alta    |
+| RF06 | Geração de relatórios acadêmicos detalhados         | 🔴 Alta    |
+| RF07 | Acesso para pais/responsáveis visualizarem o boletim  | 🟡 Média   |
 
-### 🔹 Requisitos Não Funcionais (RNF)  
+### 🔹 **Requisitos Não Funcionais (RNF)**
 
-| ID   | Descrição                                          | Prioridade |
-|------|--------------------------------------------------|------------|
-| RNF01 | O sistema deve ser acessível via web e mobile  | 🔴 Alta     |
-| RNF02 | O backend deve utilizar Spring Boot para escalabilidade | 🔴 Alta     |
-| RNF03 | O sistema deve garantir segurança dos dados financeiros | 🔴 Alta     |
-| RNF04 | O tempo de resposta das operações deve ser inferior a 2s | 🟡 Média     |
+| ID    | Descrição                                              | Prioridade |
+|-------|--------------------------------------------------------|------------|
+| RNF01 | Sistema acessível via web e mobile                     | 🔴 Alta    |
+| RNF02 | Backend desenvolvido com Spring Boot para escalabilidade | 🔴 Alta |
+| RNF03 | Segurança robusta para proteção dos dados pessoais e acadêmicos | 🔴 Alta |
+| RNF04 | Tempo de resposta inferior a 2 segundos                | 🟡 Média   |
 
-## 📌 Casos de Uso  
+## 📌 **Casos de Uso**
 
-### 1️⃣ Controle de Fluxo de Caixa  
+### 1️⃣ **Cadastro de Alunos**
 
-**👤 Ator:** Dono da Padaria  
-📌 **Fluxo:**  
-1. O sistema recebe automaticamente os dados de vendas e pagamentos.  
-2. O usuário visualiza o saldo diário e os relatórios financeiros.  
-3. O sistema alerta sobre riscos financeiros ou saldo abaixo do necessário.  
+**Ator:** Administrador  
+**Fluxo:**  
+1. O administrador acessa o painel do LunarSchool.
+2. Seleciona a opção "Cadastrar Aluno".
+3. Preenche os dados pessoais, informações de matrícula e atribui o aluno a uma turma.
+4. O sistema salva os dados e confirma o cadastro.
 
-### 2️⃣ Gestão de Contas a Pagar e Receber  
+### 2️⃣ **Lançamento de Notas**
 
-**👤 Ator:** Gerente Financeiro  
-📌 **Fluxo:**  
-1. O gerente cadastra despesas fixas e variáveis.  
-2. O sistema compara com o fluxo de caixa e projeta a necessidade de capital.  
-3. Caso o saldo projetado fique negativo, um alerta é gerado.  
-
-
-
-
+**Ator:** Professor  
+**Fluxo:**  
+1. O professor realiza login no sistema.
+2. Acessa a turma correspondente e seleciona a disciplina.
+3. Lança as notas dos alunos.
+4. O sistema atualiza o histórico acadêmico dos alunos e gera relatórios.
