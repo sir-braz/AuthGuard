@@ -1,41 +1,54 @@
-# 🌙 **LunarSchool – Sistema de Gestão Escolar**
+# 🎵 **LunarTunes – Plataforma de Streaming Musical**
 
-O **LunarSchool** é uma plataforma completa para a gestão escolar, desenvolvida para facilitar a administração de alunos, professores, turmas, notas, frequência e outras atividades acadêmicas. Com uma interface moderna e intuitiva, o LunarSchool garante eficiência e segurança na gestão de uma escola.
+O **LunarTunes** é uma plataforma dedicada ao streaming musical, oferecendo aos usuários uma experiência única para descobrir, ouvir e compartilhar suas músicas favoritas. Com uma interface intuitiva e recursos avançados, o LunarTunes proporciona entretenimento de alta qualidade para amantes da música.
 
 ## 🚀 **Funcionalidades**
 
-- **Cadastro de Alunos:** Registre e gerencie informações pessoais, histórico e matrícula dos alunos.
-- **Cadastro de Professores:** Controle dados dos professores, horários e disciplinas.
-- **Gestão de Turmas:** Crie e gerencie turmas, atribuindo professores e definindo horários.
-- **Lançamento de Notas:** Permite que os professores lancem e acompanhem as notas dos alunos.
-- **Controle de Frequência:** Registre a presença e ausência dos alunos, gerando relatórios de frequência.
-- **Relatórios Acadêmicos:** Gere relatórios detalhados sobre desempenho dos alunos, frequência e histórico.
-- **Acesso para Pais/Responsáveis:** Permita que pais e responsáveis acompanhem o desempenho e boletim dos alunos.
+- **Biblioteca Musical:** Acesso a um vasto catálogo de músicas, álbuns e playlists organizados por gênero, artista ou data de lançamento.
+- **Streaming de Alta Qualidade:** Reprodução de áudio com diferentes opções de qualidade (alta definição, padrão, econômica).
+- **Playlists Personalizadas:** Criação e compartilhamento de playlists personalizadas, permitindo que os usuários agrupem suas músicas favoritas.
+- **Recomendações Inteligentes:** Sugestões de músicas e artistas com base no histórico de audição e preferências do usuário.
+- **Modo Offline:** Download de músicas para ouvir sem conexão com a internet.
+- **Rádios e Podcasts:** Seção dedicada a estações de rádio e podcasts, oferecendo conteúdos variados além da música.
+- **Interação Social:** Opção para curtir, comentar e compartilhar músicas, além de seguir artistas e outros usuários.
+- **Integração com Redes Sociais:** Compartilhamento fácil de músicas e playlists nas principais redes sociais.
+- **Personalização da Experiência:** Temas customizáveis e opções de equalização para ajustar a qualidade do som.
 
 ## 📁 **Estrutura do Projeto**
 
 ```
-/LunarSchool
-├── /frontend      # React (Dashboard para Administradores, Professores e Pais)
-├── /backend       # Spring Boot (API de Gestão Escolar)
-├── /mobile        # Flutter (Versão Mobile – Em Desenvolvimento)
+/LunarTunes
+├── /frontend      # React (Interface de Usuário)
+├── /backend       # Node.js ou Spring Boot (API de Streaming e Gestão de Músicas)
 └── /docs          # Documentação e Requisitos
 ```
 
 ## 🔧 **Tecnologias Utilizadas**
 
-- **Frontend:** React.js, TypeScript, Axios, TailwindCSS
-- **Backend:** Java 17+, Spring Boot (Spring Security, JWT, Spring Data JPA, Flyway)
-- **Banco de Dados:** PostgreSQL
-- **Infraestrutura:** Docker
+- **Frontend:** React.js, TypeScript, Redux, TailwindCSS
+- **Backend:** Node.js com Express ou Java com Spring Boot, dependendo das preferências de escalabilidade e segurança.
+- **Banco de Dados:** MongoDB ou PostgreSQL para armazenar informações sobre músicas, usuários e playlists.
+- **Serviços de Streaming:** Integração com serviços de CDN e servidores de mídia para garantir alta performance na entrega de conteúdo.
+- **Autenticação e Segurança:** JWT para autenticação de usuários e OAuth para integração com redes sociais.
+- **Infraestrutura:** Docker, além de serviços de cloud Azure.
 
 ## ⚙️ **Instalação e Configuração**
 
 ### 🖥️ **Backend**
 
+Se optar pelo Spring Boot:
+
 ```bash
 cd backend
 ./mvnw spring-boot:run
+```
+
+Ou, se optar pelo Node.js:
+
+```bash
+cd backend
+npm install
+npm start
 ```
 
 ### 🌐 **Frontend**
@@ -46,45 +59,45 @@ npm install
 npm start
 ```
 
+### 📱 **Mobile**
+
+Com Flutter:
+
+```bash
+cd mobile
+flutter pub get
+flutter run
+```
+
+Ou com React Native:
+
+```bash
+cd mobile
+npm install
+npx react-native run-android   # ou run-ios, conforme o sistema operacional
+```
+
 ## 📊 **Requisitos**
 
 ### 🔹 **Requisitos Funcionais (RF)**
 
-| ID   | Descrição                                             | Prioridade |
-|------|-------------------------------------------------------|------------|
-| RF01 | Cadastro e gerenciamento de alunos                  | 🔴 Alta    |
-| RF02 | Cadastro e gerenciamento de professores             | 🔴 Alta    |
-| RF03 | Cadastro e controle de turmas e disciplinas         | 🔴 Alta    |
-| RF04 | Lançamento e acompanhamento de notas                | 🔴 Alta    |
-| RF05 | Registro de presença e controle de frequência       | 🔴 Alta    |
-| RF06 | Geração de relatórios acadêmicos detalhados         | 🔴 Alta    |
-| RF07 | Acesso para pais/responsáveis visualizarem o boletim  | 🟡 Média   |
+| ID   | Descrição                                                    | Prioridade |
+|------|--------------------------------------------------------------|------------|
+| RF01 | Cadastro e autenticação de usuários                          | 🔴 Alta    |
+| RF02 | Acesso à biblioteca musical com busca avançada               | 🔴 Alta    |
+| RF03 | Criação e gerenciamento de playlists                         | 🔴 Alta    |
+| RF04 | Reprodução contínua de músicas e controle de streaming       | 🔴 Alta    |
+| RF05 | Sistema de recomendações baseado no perfil do usuário          | 🟡 Média   |
+| RF06 | Download de músicas para reprodução offline                  | 🟡 Média   |
+| RF07 | Integração com rádios e podcasts                               | 🟡 Média   |
 
 ### 🔹 **Requisitos Não Funcionais (RNF)**
 
-| ID    | Descrição                                              | Prioridade |
-|-------|--------------------------------------------------------|------------|
-| RNF01 | Sistema acessível via web e mobile                     | 🔴 Alta    |
-| RNF02 | Backend desenvolvido com Spring Boot para escalabilidade | 🔴 Alta |
-| RNF03 | Segurança robusta para proteção dos dados pessoais e acadêmicos | 🔴 Alta |
-| RNF04 | Tempo de resposta inferior a 2 segundos                | 🟡 Média   |
+| ID    | Descrição                                                          | Prioridade |
+|-------|--------------------------------------------------------------------|------------|
+| RNF01 | Plataforma responsiva e compatível com diversos dispositivos        | 🔴 Alta    |
+| RNF02 | Sistema escalável para suportar um grande número de usuários         | 🔴 Alta    |
+| RNF03 | Segurança robusta para proteção de dados dos usuários                | 🔴 Alta    |
+| RNF04 | Alta disponibilidade e baixa latência no streaming                   | 🔴 Alta    |
 
-## 📌 **Casos de Uso**
 
-### 1️⃣ **Cadastro de Alunos**
-
-**Ator:** Administrador  
-**Fluxo:**  
-1. O administrador acessa o painel do LunarSchool.
-2. Seleciona a opção "Cadastrar Aluno".
-3. Preenche os dados pessoais, informações de matrícula e atribui o aluno a uma turma.
-4. O sistema salva os dados e confirma o cadastro.
-
-### 2️⃣ **Lançamento de Notas**
-
-**Ator:** Professor  
-**Fluxo:**  
-1. O professor realiza login no sistema.
-2. Acessa a turma correspondente e seleciona a disciplina.
-3. Lança as notas dos alunos.
-4. O sistema atualiza o histórico acadêmico dos alunos e gera relatórios.
